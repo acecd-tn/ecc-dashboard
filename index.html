@@ -30,10 +30,7 @@
     gap: 1vh;
     padding: 1.5vh 1.8vw;
   }
-  /* Every direct row of the grid clips its own content so nothing can
-     visually bleed into the section above or below it. */
   .wrap > div{min-height:0;min-width:0;overflow:hidden;}
-  /* HEADER */
   .header{
     display:flex;align-items:center;justify-content:space-between;
     border-bottom:2px solid var(--panel-border);
@@ -46,8 +43,6 @@
     line-height:1.15;
   }
   .header .subtitle{font-size:1.0vw;color:var(--sub);margin-top:0.2vh;letter-spacing:0.05em;}
-
-  /* TOP METRICS ROW */
   .metrics-row{
     display:grid;
     grid-template-columns: repeat(6, 1fr);
@@ -71,8 +66,6 @@
   .c-red .val{color:var(--red);}
   .abandon-rate.rate-ok{color:var(--green);}
   .abandon-rate.rate-hot{color:#ff8c1a;}
-
-  /* NENA SECTION */
   .section-title{
     font-size:1.3vw;color:var(--sub);letter-spacing:0.12em;text-transform:uppercase;
     margin-bottom:0.6vh;
@@ -115,8 +108,6 @@
   .pill-pass{background:rgba(43,255,136,0.12);color:var(--green);border:1px solid rgba(43,255,136,0.5);}
   .pill-fail{background:rgba(255,59,59,0.12);color:var(--red);border:1px solid rgba(255,59,59,0.5);}
   .pill-gold{background:rgba(255,210,63,0.12);color:var(--gold);border:1px solid rgba(255,210,63,0.5);}
-
-  /* TIMELINE SECTION */
   .timeline-wrap{display:flex;flex-direction:column;min-height:0;}
   .timeline-header{
     display:flex;align-items:center;justify-content:space-between;
@@ -154,8 +145,6 @@
   .hour-count{font-size:0.75vw;color:var(--text);margin-bottom:0.2vh;}
   .hour-col.peak .hour-count{color:var(--gold);font-weight:800;}
   .hour-label{font-size:0.65vw;color:var(--sub);margin-top:0.3vh;}
-
-  /* SHIFT SECTION */
   .shift-wrap{display:flex;flex-direction:column;min-height:0;}
   .shift-row{
     flex:1;min-height:0;
