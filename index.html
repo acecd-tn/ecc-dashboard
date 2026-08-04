@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anderson County 911 — Daily Answer Time Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0A1929;
+    --panel:#0F2340;
+    --panel-2:#13294D;
+    --card:#122A47;
+    --border:#1E3A5A;
+    --border-soft:#16304F;
+    --amber:#F2A93B;
+    --amber-dim:#8A6423;
+    --green:#33C481;
+    --green-dim:#1C6B47;
+    --red:#EF5760;
+    --red-dim:#7A2B30;
+    --blue:#5B8FD6;
+    --text:#EAF2FA;
+    --text-dim:#8FA6BF;
+    --text-faint:#5D7591;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    padding:0 0 60px;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+
+  header{
+    background:linear-gradient(180deg,#0D2038,#0A1929 88%);
+    border-bottom:1px solid var(--border);
+    padding:34px 0 26px;
+  }
+  .head-row{display:flex;align-items:center;gap:20px;flex-wrap:wrap;justify-content:space-between;}
+  .head-left{display:flex;align-items:center;gap:18px;}
+  .badge{
+    width:56px;height:56px;border-radius:50%;
+    background:var(--panel-2);
+    border:1.5px solid var(--amber);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Oswald',sans-serif;font-weight:700;color:var(--amber);
+    font-size:15px;letter-spacing:0.5px;flex-shrink:0;
+  }
+  .head-titles .eyebrow{
+    font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:2px;
+    color:var(--text-faint);text-transform:uppercase;margin-bottom:6px;
+  }
+  h1{
+    font-family:'Oswald',sans-serif;font-weight:600;font-size:30px;
+    letter-spacing:0.5px;text-transform:uppercase;color:var(--text);
+  }
+  .head-sub{color:var(--text-dim);font-size:14px;margin-top:4px;}
+  .period-block{text-align:right;}
+  .period-block .month{
+    font-family:'Oswald',sans-serif;font-size:26px;font-weight:600;color:var(--amber);
+    letter-spacing:1px;
+  }
+  .period-block .vs{
+    font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text-faint);margin-top:2px;
+  }
+
+  .note{
+    margin:24px 0 0;
+    background:linear-gradient(90deg,rgba(242,169,59,0.14),rgba(242,169,59,0.04));
+    border:1px solid var(--amber-dim);
+    border-left:4px solid var(--amber);
+    border-radius:6px;
+    padding:16px 20px;
+    display:flex;gap:14px;align-items:flex-start;
+  }
+  .note-icon{
+    font-family:'Oswald',sans-serif;font-weight:700;color:var(--amber);
+    font-size:13px;letter-spacing:1px;
+    background:rgba(242,169,59,0.15);
+    border:1px solid var(--amber-dim);
+    border-radius:4px;padding:4px 9px;flex-shrink:0;margin-top:1px;
+  }
+  .note-body .note-title{font-weight:600;font-size:14.5px;color:var(--text);margin-bottom:3px;}
+  .note-body .note-text{font-size:13.5px;color:var(--text-dim);line-height:1.55;}
+
+  main{padding-top:32px;}
+  section{margin-bottom:44px;}
+  .section-head{
+    display:flex;align-items:baseline;justify-content:space-between;
+    border-bottom:1px solid var(--border);padding-bottom:10px;margin-bottom:20px;
+  }
+  .section-title{
+    font-family:'Oswald',sans-serif;font-size:18px;font-weight:600;
+    text-transform:uppercase;letter-spacing:0.8px;color:var(--text);
+  }
+  .section-note{font-size:12px;color:var(--text-faint);font-family:'IBM Plex Mono',monospace;}
+
+  .kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+  .kpi-card{
+    background:var(--card);border:1px solid var(--border);border-radius:8px;
+    padding:18px 18px 16px;position:relative;overflow:hidden;
+  }
+  .kpi-card::before{content:"";position:absolute;top:0;left:0;width:3px;height:100%;background:var(--amber);}
+  .kpi-card.good::before{background:var(--green);}
+  .kpi-label{font-size:11.5px;color:var(--text-dim);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;}
+  .kpi-value{font-family:'IBM Plex Mono',monospace;font-size:32px;font-weight:600;color:var(--text);line-height:1;}
+  .kpi-unit{font-size:13px;color:var(--text-faint);margin-left:4px;}
+  .kpi-sub{margin-top:10px;font-size:12.5px;color:var(--text-dim);font-family:'IBM Plex Mono',monospace;}
+  .kpi-sub.green{color:var(--green);}
+
+  .panel{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:20px 22px;}
+  .panel-title{
+    font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.8px;
+    color:var(--text-dim);margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;
+  }
+
+  .meter-row{margin-bottom:16px;}
+  .meter-row:last-child{margin-bottom:0;}
+  .meter-top{display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px;}
+  .meter-top .m-label{color:var(--text);font-weight:500;}
+  .meter-top .m-vals{font-family:'IBM Plex Mono',monospace;color:var(--text-dim);font-size:12.5px;}
+  .meter-track{position:relative;height:20px;background:var(--panel);border-radius:4px;overflow:hidden;border:1px solid var(--border-soft);}
+  .meter-fill{position:absolute;top:0;left:0;height:100%;border-radius:4px 0 0 4px;background:var(--green);transition:width 1s ease;}
+  .meter-target-line{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--amber);}
+  .meter-legend{display:flex;gap:18px;margin-top:14px;font-size:11.5px;color:var(--text-faint);font-family:'IBM Plex Mono',monospace;flex-wrap:wrap;}
+  .legend-dot{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px;vertical-align:-1px;}
+
+  /* ===== SHIFT CARDS ===== */
+  .shift-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+  .shift-card{
+    background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:18px 20px;
+  }
+  .shift-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px;}
+  .shift-name{font-family:'Oswald',sans-serif;font-size:15px;font-weight:600;color:var(--text);text-transform:uppercase;letter-spacing:0.5px;}
+  .shift-hours{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text-faint);}
+  .shift-meter-row{margin-bottom:12px;}
+  .shift-meter-row:last-child{margin-bottom:0;}
+  .shift-meter-top{display:flex;justify-content:space-between;font-size:11.5px;margin-bottom:5px;color:var(--text-dim);}
+  .shift-meter-track{position:relative;height:14px;background:var(--bg);border-radius:3px;overflow:hidden;border:1px solid var(--border-soft);}
+  .shift-meter-fill{position:absolute;top:0;left:0;height:100%;border-radius:3px 0 0 3px;background:var(--green);}
+  .shift-meter-target{position:absolute;top:-2px;bottom:-2px;width:1.5px;background:var(--amber);}
+  .shift-summary{
+    margin-top:14px;padding-top:12px;border-top:1px solid var(--border-soft);
+    font-size:10.5px;color:var(--text-faint);text-align:center;font-family:'IBM Plex Mono',monospace;
+    text-transform:uppercase;letter-spacing:0.5px;
+  }
+
+  footer{
+    margin-top:20px;padding-top:20px;border-top:1px solid var(--border);
+    font-size:11.5px;color:var(--text-faint);font-family:'IBM Plex Mono',monospace;
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;
+  }
+
+  @media (max-width:900px){
+    .kpi-grid{grid-template-columns:repeat(2,1fr);}
+    .shift-grid{grid-template-columns:1fr;}
+    .period-block{text-align:left;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="head-row">
+      <div class="head-left">
+        <div class="badge">911</div>
+        <div class="head-titles">
+          <div class="eyebrow">Emergency Communications Center</div>
+          <h1>Anderson County 911</h1>
+          <div class="head-sub">Daily Answer Time Dashboard</div>
+        </div>
+      </div>
+      <div class="period-block">
+        <div class="month">JUL 30, 2026</div>
+        <div class="vs">SINGLE-DAY SNAPSHOT · ALL AGENCIES</div>
+      </div>
+    </div>
+
+    <div class="note">
+      <div class="note-icon">NOTE</div>
+      <div class="note-body">
+        <div class="note-title">Full-day answer time compliance was perfect</div>
+        <div class="note-text">100% of calls were answered within 10, 15, and 20 seconds on Jul 30 — well ahead of the 90%/95% NENA thresholds. This file doesn't include an hourly breakdown, so the shift panels below can't be populated until an hourly export is provided for this date.</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- HERO KPIs -->
+  <section>
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-label">Total 911 Calls</div>
+        <div class="kpi-value">59</div>
+        <div class="kpi-sub">56 answered · 3 abandoned</div>
+      </div>
+      <div class="kpi-card good">
+        <div class="kpi-label">Avg. Answer Time</div>
+        <div class="kpi-value">4.86<span class="kpi-unit">sec</span></div>
+        <div class="kpi-sub green">Within NENA standard</div>
+      </div>
+      <div class="kpi-card good">
+        <div class="kpi-label">Answered ≤ 15 Sec</div>
+        <div class="kpi-value">100<span class="kpi-unit">%</span></div>
+        <div class="kpi-sub green">vs 90% NENA target</div>
+      </div>
+      <div class="kpi-card good">
+        <div class="kpi-label">Answered ≤ 20 Sec</div>
+        <div class="kpi-value">100<span class="kpi-unit">%</span></div>
+        <div class="kpi-sub green">vs 95% NENA target</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FULL DAY ANSWER TIME -->
+  <section>
+    <div class="section-head">
+      <div class="section-title">911 Answer Time Compliance — Full Day</div>
+      <div class="section-note">NENA STANDARD · 90% ≤15s · 95% ≤20s</div>
+    </div>
+    <div class="panel">
+      <div class="panel-title">Jul 30, 2026 · 00:00–23:59</div>
+
+      <div class="meter-row">
+        <div class="meter-top"><span class="m-label">Answered ≤ 10 seconds</span><span class="m-vals">100.00%</span></div>
+        <div class="meter-track"><div class="meter-fill" style="width:100%"></div></div>
+      </div>
+
+      <div class="meter-row">
+        <div class="meter-top"><span class="m-label">Answered ≤ 15 seconds</span><span class="m-vals">100.00%</span></div>
+        <div class="meter-track"><div class="meter-fill" style="width:100%"></div><div class="meter-target-line" style="left:90%"></div></div>
+      </div>
+
+      <div class="meter-row" style="margin-bottom:0;">
+        <div class="meter-top"><span class="m-label">Answered ≤ 20 seconds</span><span class="m-vals">100.00%</span></div>
+        <div class="meter-track"><div class="meter-fill" style="width:100%"></div><div class="meter-target-line" style="left:95%"></div></div>
+      </div>
+
+      <div class="meter-legend">
+        <span><span class="legend-dot" style="background:var(--green)"></span>Jul 30, 2026</span>
+        <span><span class="legend-dot" style="background:var(--amber)"></span>NENA threshold</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SHIFT BREAKDOWN -->
+  <section>
+    <div class="section-head">
+      <div class="section-title">Answer Time by Dispatch Shift</div>
+      <div class="section-note">AWAITING HOURLY EXPORT FOR JUL 30</div>
+    </div>
+    <div class="shift-grid">
+      <div class="shift-card" style="border-style:dashed;">
+        <div class="shift-head"><span class="shift-name">Day Shift</span><span class="shift-hours">07:00–15:00</span></div>
+        <div class="shift-meter-row">
+          <div class="shift-meter-top"><span>Answered ≤ 10 sec</span><span>—</span></div>
+          <div class="shift-meter-track" style="border-style:dashed;"></div>
+        </div>
+        <div class="shift-meter-row">
+          <div class="shift-meter-top"><span>Answered ≤ 15 sec</span><span>—</span></div>
+          <div class="shift-meter-track" style="border-style:dashed;"><div class="shift-meter-target" style="left:90%"></div></div>
+        </div>
+        <div class="shift-meter-row">
+          <div class="shift-meter-top"><span>Answered ≤ 20 sec</span><span>—</span></div>
+          <div class="shift-meter-track" style="border-style:dashed;"><div class="shift-meter-target" style="left:95%"></div></div>
+        </div>
+        <div class="shift-summary">No data uploaded</div>
+      </div>
+
+      <div class="shift-card" style="border-style:dashed;">
+        <div class="shift-head"><span class="shift-name">Evening Shift</span><span class="shift-hours">15:00–23:00</span></div>
+        <div class="shift-meter-row">
+          <div class="shift-meter-top"><span>Answered ≤ 10 sec</span><span>—</span></div>
+          <div class="shift-meter-track" style="border-style:dashed;"></div>
+        </div>
+        <div class="shift-meter-row">
+          <div class="shift-meter-top"><span>Answered ≤ 15 sec</span><span>—</span></div>
+          <div class="shift-meter-track" style="border-style:dashed;"><div class="shift-meter-target" style="left:90%"></div></div>
+        </div>
+        <div class="shift-meter-row">
+          <div class="shift-meter-top"><span>Answered ≤ 20 sec</span><span>—</span></div>
+          <div class="shift-meter-track" style="border-style:dashed;"><div class="shift-meter-target" style="left:95%"></div></div>
+        </div>
+        <div class="shift-summary">No data uploaded</div>
+      </div>
+
+      <div class="shift-card" style="border-style:dashed;">
+        <div class="shift-head"><span class="shift-name">Overnight Shift</span><span class="shift-hours">23:00–07:00</span></div>
+        <div class="shift-meter-row">
+          <div class="shift-meter-top"><span>Answered ≤ 10 sec</span><span>—</span></div>
+          <div class="shift-meter-track" style="border-style:dashed;"></div>
+        </div>
+        <div class="shift-meter-row">
+          <div class="shift-meter-top"><span>Answered ≤ 15 sec</span><span>—</span></div>
+          <div class="shift-meter-track" style="border-style:dashed;"><div class="shift-meter-target" style="left:90%"></div></div>
+        </div>
+        <div class="shift-meter-row">
+          <div class="shift-meter-top"><span>Answered ≤ 20 sec</span><span>—</span></div>
+          <div class="shift-meter-track" style="border-style:dashed;"><div class="shift-meter-target" style="left:95%"></div></div>
+        </div>
+        <div class="shift-summary">No data uploaded</div>
+      </div>
+    </div>
+    <div class="meter-legend">
+      <span>Upload an hourly export (Time Group: 60 Minute) for Jul 30 to populate these panels.</span>
+    </div>
+  </section>
+
+  <footer>
+    <span>Source: Top PSAP Metrics – Answer Time · Anderson County Emergency Communications · Report date 07/31/2026</span>
+    <span>Generated report — all figures as submitted in source data</span>
+  </footer>
+
+</main>
+</body>
+</html>
