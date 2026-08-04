@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Anderson County ECC — Daily Dashboard</title>
+<title>Anderson County Emergency Communications — Daily Dashboard</title>
 <style>
   :root{
     --bg:#05070d;
@@ -37,20 +37,10 @@
     padding-bottom:1vh;
   }
   .header .title{
-    font-size:2.5vw;font-weight:800;letter-spacing:0.08em;
+    font-size:2.3vw;font-weight:800;letter-spacing:0.06em;
     color:var(--cyan);
-    text-shadow:0 0 18px rgba(0,229,255,0.55);
   }
-  .header .title span{color:var(--gold);text-shadow:0 0 18px rgba(255,210,63,0.6);}
   .header .subtitle{font-size:1.1vw;color:var(--sub);margin-top:0.2vh;letter-spacing:0.05em;}
-  .clockbox{text-align:right;}
-  .clock{
-    font-size:3.4vw;font-weight:800;color:var(--gold);
-    text-shadow:0 0 22px rgba(255,210,63,0.65);
-    font-variant-numeric: tabular-nums;
-    letter-spacing:0.02em;
-  }
-  .clockdate{font-size:1.1vw;color:var(--sub);margin-top:0.1vh;}
 
   /* TOP METRICS ROW */
   .metrics-row{
@@ -64,17 +54,16 @@
     border-radius:14px;
     display:flex;flex-direction:column;align-items:center;justify-content:center;
     text-align:center;
-    box-shadow: 0 0 0 1px rgba(255,255,255,0.02), 0 8px 24px rgba(0,0,0,0.5);
   }
   .card .val{font-size:2.9vw;font-weight:800;line-height:1;}
   .card .lbl{font-size:0.9vw;color:var(--sub);margin-top:0.6vh;letter-spacing:0.06em;text-transform:uppercase;}
-  .c-cyan .val{color:var(--cyan);text-shadow:0 0 16px rgba(0,229,255,0.5);}
-  .c-magenta .val{color:var(--magenta);text-shadow:0 0 16px rgba(255,46,166,0.5);}
-  .c-gold .val{color:var(--gold);text-shadow:0 0 16px rgba(255,210,63,0.5);}
-  .c-green .val{color:var(--green);text-shadow:0 0 16px rgba(43,255,136,0.5);}
-  .c-red .val{color:var(--red);text-shadow:0 0 16px rgba(255,59,59,0.5);}
-  .abandon-rate.rate-ok{color:var(--green);text-shadow:0 0 16px rgba(43,255,136,0.5);}
-  .abandon-rate.rate-hot{color:#ff8c1a;text-shadow:0 0 16px rgba(255,140,26,0.6);}
+  .c-cyan .val{color:var(--cyan);}
+  .c-magenta .val{color:var(--magenta);}
+  .c-gold .val{color:var(--gold);}
+  .c-green .val{color:var(--green);}
+  .c-red .val{color:var(--red);}
+  .abandon-rate.rate-ok{color:var(--green);}
+  .abandon-rate.rate-hot{color:#ff8c1a;}
 
   /* NENA SECTION */
   .section-title{
@@ -91,24 +80,26 @@
   .nena-card{
     border-radius:16px;
     display:flex;flex-direction:column;align-items:center;justify-content:center;
-    position:relative;
     border:2px solid var(--panel-border);
     background:linear-gradient(160deg, var(--panel), #070b14);
+    padding:1vh 1.2vw;
   }
   .nena-card.excellence{border-color: rgba(255,210,63,0.5);}
+  .nena-card .labels-row{
+    width:100%;display:flex;justify-content:space-between;
+    margin-bottom:1vh;
+  }
   .nena-card .badge{
-    position:absolute;top:1vh;left:1.2vw;
-    font-size:1.0vw;letter-spacing:0.1em;color:var(--sub);text-transform:uppercase;
+    font-size:0.85vw;letter-spacing:0.1em;color:var(--sub);text-transform:uppercase;
   }
   .nena-card .goal{
-    position:absolute;top:1vh;right:1.2vw;
-    font-size:1.0vw;letter-spacing:0.05em;color:var(--sub);
+    font-size:0.85vw;letter-spacing:0.05em;color:var(--sub);text-align:right;
   }
-  .nena-card .pct{font-size:4.2vw;font-weight:800;line-height:1;}
+  .nena-card .pct{font-size:3.8vw;font-weight:800;line-height:1;}
   .nena-card .desc{font-size:1.0vw;color:var(--sub);margin-top:0.6vh;}
-  .status-pass{color:var(--green);text-shadow:0 0 20px rgba(43,255,136,0.55);}
-  .status-fail{color:var(--red);text-shadow:0 0 20px rgba(255,59,59,0.55);}
-  .status-gold{color:var(--gold);text-shadow:0 0 20px rgba(255,210,63,0.55);}
+  .status-pass{color:var(--green);}
+  .status-fail{color:var(--red);}
+  .status-gold{color:var(--gold);}
   .pill{
     margin-top:1vh;padding:0.4vh 1.2vw;border-radius:20px;
     font-size:1.0vw;font-weight:700;letter-spacing:0.08em;
@@ -125,7 +116,7 @@
     background:rgba(255,210,63,0.08);border:1px solid rgba(255,210,63,0.45);
     border-radius:10px;padding:0.3vh 1vw;
   }
-  .busiest b{color:var(--gold);text-shadow:0 0 10px rgba(255,210,63,0.5);}
+  .busiest b{color:var(--gold);}
   .timeline{
     flex:1;
     display:flex;align-items:flex-end;
@@ -142,12 +133,10 @@
     width:70%;
     border-radius:4px 4px 0 0;
     background:linear-gradient(180deg, var(--cyan), #0a4a5c);
-    box-shadow:0 0 10px rgba(0,229,255,0.35);
     min-height:2px;
   }
   .hour-col.peak .hour-bar{
     background:linear-gradient(180deg, var(--gold), #7a5a00);
-    box-shadow:0 0 14px rgba(255,210,63,0.65);
   }
   .hour-count{font-size:0.75vw;color:var(--text);margin-bottom:0.2vh;}
   .hour-col.peak .hour-count{color:var(--gold);font-weight:800;}
@@ -169,13 +158,12 @@
   }
   .shift-card .shift-name{
     font-size:1.35vw;font-weight:800;color:var(--cyan);letter-spacing:0.05em;
-    text-shadow:0 0 12px rgba(0,229,255,0.4);
   }
   .shift-card .shift-time{font-size:0.9vw;color:var(--sub);margin-bottom:0.6vh;}
   .shift-stats{display:flex;justify-content:space-between;flex:1;align-items:center;}
   .shift-stat{text-align:center;flex:1;}
   .shift-stat .n{font-size:2.1vw;font-weight:800;color:var(--text);}
-  .shift-stat .n.duration-hot{color:#ff8c1a;text-shadow:0 0 16px rgba(255,140,26,0.6);}
+  .shift-stat .n.duration-hot{color:#ff8c1a;}
   .shift-stat .l{font-size:0.75vw;color:var(--sub);text-transform:uppercase;letter-spacing:0.05em;}
   .shift-nena{display:flex;justify-content:space-around;margin-top:0.6vh;padding-top:0.6vh;border-top:1px solid var(--panel-border);}
   .shift-nena div{text-align:center;}
@@ -188,12 +176,8 @@
 
   <div class="header">
     <div>
-      <div class="title">ANDERSON COUNTY <span>ECC</span></div>
+      <div class="title">ANDERSON COUNTY EMERGENCY COMMUNICATIONS</div>
       <div class="subtitle">Daily Operations Dashboard &nbsp;·&nbsp; Previous Day Overview</div>
-    </div>
-    <div class="clockbox">
-      <div class="clock" id="clock">--:--:--</div>
-      <div class="clockdate" id="today"></div>
     </div>
   </div>
 
@@ -228,22 +212,28 @@
     <div class="section-title">NENA 911 Answer Time Standard — Report Date 08/03/2026</div>
     <div class="nena-row">
       <div class="nena-card excellence">
-        <div class="badge">Internal Goal</div>
-        <div class="goal">Excellence Target</div>
+        <div class="labels-row">
+          <div class="badge">Internal Goal</div>
+          <div class="goal">Excellence Target</div>
+        </div>
         <div class="pct status-gold">88.14%</div>
         <div class="desc">Answered ≤ 10 Seconds</div>
         <div class="pill pill-gold">APPROACHING GOAL</div>
       </div>
       <div class="nena-card">
-        <div class="badge">NENA Standard</div>
-        <div class="goal">Target: 90% ≤ 15s</div>
+        <div class="labels-row">
+          <div class="badge">NENA Standard</div>
+          <div class="goal">Target: 90% ≤ 15s</div>
+        </div>
         <div class="pct status-pass">98.31%</div>
         <div class="desc">Answered ≤ 15 Seconds</div>
         <div class="pill pill-pass">MEETS STANDARD</div>
       </div>
       <div class="nena-card">
-        <div class="badge">NENA Standard</div>
-        <div class="goal">Target: 95% ≤ 20s</div>
+        <div class="labels-row">
+          <div class="badge">NENA Standard</div>
+          <div class="goal">Target: 95% ≤ 20s</div>
+        </div>
         <div class="pct status-pass">100.00%</div>
         <div class="desc">Answered ≤ 20 Seconds</div>
         <div class="pill pill-pass">MEETS STANDARD</div>
@@ -313,19 +303,6 @@
 </div>
 
 <script>
-function pad(n){return n.toString().padStart(2,'0');}
-function tick(){
-  const now = new Date();
-  document.getElementById('clock').textContent =
-    pad(now.getHours())+':'+pad(now.getMinutes())+':'+pad(now.getSeconds());
-  const days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-  const months=['January','February','March','April','May','June','July','August','September','October','November','December'];
-  document.getElementById('today').textContent =
-    days[now.getDay()]+', '+months[now.getMonth()]+' '+now.getDate()+', '+now.getFullYear();
-}
-tick();
-setInterval(tick,1000);
-
 // 24-hour 911 call volume (from HourlySpeedOfAnswerRollup, 08/03/2026)
 const hourly = [1,1,2,3,0,2,2,3,2,0,2,4,2,2,4,2,3,5,4,2,2,4,2,3];
 const maxCalls = Math.max(...hourly);
