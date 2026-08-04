@@ -2,323 +2,356 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Anderson County 911 — Daily Answer Time Dashboard</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<title>Anderson County ECC — Daily Dashboard</title>
 <style>
   :root{
-    --bg:#0A1929;
-    --panel:#0F2340;
-    --panel-2:#13294D;
-    --card:#122A47;
-    --border:#1E3A5A;
-    --border-soft:#16304F;
-    --amber:#F2A93B;
-    --amber-dim:#8A6423;
-    --green:#33C481;
-    --green-dim:#1C6B47;
-    --red:#EF5760;
-    --red-dim:#7A2B30;
-    --blue:#5B8FD6;
-    --text:#EAF2FA;
-    --text-dim:#8FA6BF;
-    --text-faint:#5D7591;
+    --bg:#05070d;
+    --panel:#0c1220;
+    --panel-border:#1c2740;
+    --cyan:#00e5ff;
+    --magenta:#ff2ea6;
+    --gold:#ffd23f;
+    --green:#2bff88;
+    --red:#ff3b3b;
+    --text:#eaf6ff;
+    --sub:#7d93b8;
   }
   *{box-sizing:border-box;margin:0;padding:0;}
-  body{
-    background:var(--bg);
+  html,body{
+    width:100vw;height:100vh;overflow:hidden;
+    background:radial-gradient(circle at 50% 0%, #0e1830 0%, #05070d 55%);
     color:var(--text);
-    font-family:'Inter',sans-serif;
-    padding:0 0 60px;
-    -webkit-font-smoothing:antialiased;
+    font-family:'Segoe UI',Arial,sans-serif;
   }
-  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .wrap{
+    width:100vw;height:100vh;
+    display:grid;
+    grid-template-rows: 9vh 14vh 21vh 19vh 24vh;
+    gap: 1vh;
+    padding: 1.5vh 1.8vw;
+  }
+  /* HEADER */
+  .header{
+    display:flex;align-items:center;justify-content:space-between;
+    border-bottom:2px solid var(--panel-border);
+    padding-bottom:1vh;
+  }
+  .header .title{
+    font-size:2.5vw;font-weight:800;letter-spacing:0.08em;
+    color:var(--cyan);
+    text-shadow:0 0 18px rgba(0,229,255,0.55);
+  }
+  .header .title span{color:var(--gold);text-shadow:0 0 18px rgba(255,210,63,0.6);}
+  .header .subtitle{font-size:1.1vw;color:var(--sub);margin-top:0.2vh;letter-spacing:0.05em;}
+  .clockbox{text-align:right;}
+  .clock{
+    font-size:3.4vw;font-weight:800;color:var(--gold);
+    text-shadow:0 0 22px rgba(255,210,63,0.65);
+    font-variant-numeric: tabular-nums;
+    letter-spacing:0.02em;
+  }
+  .clockdate{font-size:1.1vw;color:var(--sub);margin-top:0.1vh;}
 
-  header{
-    background:linear-gradient(180deg,#0D2038,#0A1929 88%);
-    border-bottom:1px solid var(--border);
-    padding:34px 0 26px;
+  /* TOP METRICS ROW */
+  .metrics-row{
+    display:grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap:1.2vw;
   }
-  .head-row{display:flex;align-items:center;gap:20px;flex-wrap:wrap;justify-content:space-between;}
-  .head-left{display:flex;align-items:center;gap:18px;}
-  .badge{
-    width:56px;height:56px;border-radius:50%;
-    background:var(--panel-2);
-    border:1.5px solid var(--amber);
-    display:flex;align-items:center;justify-content:center;
-    font-family:'Oswald',sans-serif;font-weight:700;color:var(--amber);
-    font-size:15px;letter-spacing:0.5px;flex-shrink:0;
+  .card{
+    background:linear-gradient(160deg, var(--panel), #070b14);
+    border:1px solid var(--panel-border);
+    border-radius:14px;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.02), 0 8px 24px rgba(0,0,0,0.5);
   }
-  .head-titles .eyebrow{
-    font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:2px;
-    color:var(--text-faint);text-transform:uppercase;margin-bottom:6px;
-  }
-  h1{
-    font-family:'Oswald',sans-serif;font-weight:600;font-size:30px;
-    letter-spacing:0.5px;text-transform:uppercase;color:var(--text);
-  }
-  .head-sub{color:var(--text-dim);font-size:14px;margin-top:4px;}
-  .period-block{text-align:right;}
-  .period-block .month{
-    font-family:'Oswald',sans-serif;font-size:26px;font-weight:600;color:var(--amber);
-    letter-spacing:1px;
-  }
-  .period-block .vs{
-    font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text-faint);margin-top:2px;
-  }
+  .card .val{font-size:2.9vw;font-weight:800;line-height:1;}
+  .card .lbl{font-size:0.9vw;color:var(--sub);margin-top:0.6vh;letter-spacing:0.06em;text-transform:uppercase;}
+  .c-cyan .val{color:var(--cyan);text-shadow:0 0 16px rgba(0,229,255,0.5);}
+  .c-magenta .val{color:var(--magenta);text-shadow:0 0 16px rgba(255,46,166,0.5);}
+  .c-gold .val{color:var(--gold);text-shadow:0 0 16px rgba(255,210,63,0.5);}
+  .c-green .val{color:var(--green);text-shadow:0 0 16px rgba(43,255,136,0.5);}
+  .c-red .val{color:var(--red);text-shadow:0 0 16px rgba(255,59,59,0.5);}
+  .abandon-rate.rate-ok{color:var(--green);text-shadow:0 0 16px rgba(43,255,136,0.5);}
+  .abandon-rate.rate-hot{color:#ff8c1a;text-shadow:0 0 16px rgba(255,140,26,0.6);}
 
-  .note{
-    margin:24px 0 0;
-    background:linear-gradient(90deg,rgba(242,169,59,0.14),rgba(242,169,59,0.04));
-    border:1px solid var(--amber-dim);
-    border-left:4px solid var(--amber);
-    border-radius:6px;
-    padding:16px 20px;
-    display:flex;gap:14px;align-items:flex-start;
-  }
-  .note-icon{
-    font-family:'Oswald',sans-serif;font-weight:700;color:var(--amber);
-    font-size:13px;letter-spacing:1px;
-    background:rgba(242,169,59,0.15);
-    border:1px solid var(--amber-dim);
-    border-radius:4px;padding:4px 9px;flex-shrink:0;margin-top:1px;
-  }
-  .note-body .note-title{font-weight:600;font-size:14.5px;color:var(--text);margin-bottom:3px;}
-  .note-body .note-text{font-size:13.5px;color:var(--text-dim);line-height:1.55;}
-
-  main{padding-top:32px;}
-  section{margin-bottom:44px;}
-  .section-head{
-    display:flex;align-items:baseline;justify-content:space-between;
-    border-bottom:1px solid var(--border);padding-bottom:10px;margin-bottom:20px;
-  }
+  /* NENA SECTION */
   .section-title{
-    font-family:'Oswald',sans-serif;font-size:18px;font-weight:600;
-    text-transform:uppercase;letter-spacing:0.8px;color:var(--text);
+    font-size:1.3vw;color:var(--sub);letter-spacing:0.12em;text-transform:uppercase;
+    margin-bottom:0.6vh;
   }
-  .section-note{font-size:12px;color:var(--text-faint);font-family:'IBM Plex Mono',monospace;}
-
-  .kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
-  .kpi-card{
-    background:var(--card);border:1px solid var(--border);border-radius:8px;
-    padding:18px 18px 16px;position:relative;overflow:hidden;
+  .nena-wrap{display:flex;flex-direction:column;}
+  .nena-row{
+    flex:1;
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap:1.2vw;
   }
-  .kpi-card::before{content:"";position:absolute;top:0;left:0;width:3px;height:100%;background:var(--amber);}
-  .kpi-card.good::before{background:var(--green);}
-  .kpi-label{font-size:11.5px;color:var(--text-dim);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;}
-  .kpi-value{font-family:'IBM Plex Mono',monospace;font-size:32px;font-weight:600;color:var(--text);line-height:1;}
-  .kpi-unit{font-size:13px;color:var(--text-faint);margin-left:4px;}
-  .kpi-sub{margin-top:10px;font-size:12.5px;color:var(--text-dim);font-family:'IBM Plex Mono',monospace;}
-  .kpi-sub.green{color:var(--green);}
-
-  .panel{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:20px 22px;}
-  .panel-title{
-    font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.8px;
-    color:var(--text-dim);margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;
+  .nena-card{
+    border-radius:16px;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    position:relative;
+    border:2px solid var(--panel-border);
+    background:linear-gradient(160deg, var(--panel), #070b14);
   }
+  .nena-card.excellence{border-color: rgba(255,210,63,0.5);}
+  .nena-card .badge{
+    position:absolute;top:1vh;left:1.2vw;
+    font-size:1.0vw;letter-spacing:0.1em;color:var(--sub);text-transform:uppercase;
+  }
+  .nena-card .goal{
+    position:absolute;top:1vh;right:1.2vw;
+    font-size:1.0vw;letter-spacing:0.05em;color:var(--sub);
+  }
+  .nena-card .pct{font-size:4.2vw;font-weight:800;line-height:1;}
+  .nena-card .desc{font-size:1.0vw;color:var(--sub);margin-top:0.6vh;}
+  .status-pass{color:var(--green);text-shadow:0 0 20px rgba(43,255,136,0.55);}
+  .status-fail{color:var(--red);text-shadow:0 0 20px rgba(255,59,59,0.55);}
+  .status-gold{color:var(--gold);text-shadow:0 0 20px rgba(255,210,63,0.55);}
+  .pill{
+    margin-top:1vh;padding:0.4vh 1.2vw;border-radius:20px;
+    font-size:1.0vw;font-weight:700;letter-spacing:0.08em;
+  }
+  .pill-pass{background:rgba(43,255,136,0.12);color:var(--green);border:1px solid rgba(43,255,136,0.5);}
+  .pill-fail{background:rgba(255,59,59,0.12);color:var(--red);border:1px solid rgba(255,59,59,0.5);}
+  .pill-gold{background:rgba(255,210,63,0.12);color:var(--gold);border:1px solid rgba(255,210,63,0.5);}
 
-  .meter-row{margin-bottom:16px;}
-  .meter-row:last-child{margin-bottom:0;}
-  .meter-top{display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px;}
-  .meter-top .m-label{color:var(--text);font-weight:500;}
-  .meter-top .m-vals{font-family:'IBM Plex Mono',monospace;color:var(--text-dim);font-size:12.5px;}
-  .meter-track{position:relative;height:20px;background:var(--panel);border-radius:4px;overflow:hidden;border:1px solid var(--border-soft);}
-  .meter-fill{position:absolute;top:0;left:0;height:100%;border-radius:4px 0 0 4px;background:var(--green);transition:width 1s ease;}
-  .meter-target-line{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--amber);}
-  .meter-legend{display:flex;gap:18px;margin-top:14px;font-size:11.5px;color:var(--text-faint);font-family:'IBM Plex Mono',monospace;flex-wrap:wrap;}
-  .legend-dot{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px;vertical-align:-1px;}
+  /* TIMELINE SECTION */
+  .timeline-wrap{display:flex;flex-direction:column;}
+  .timeline-header{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:0.4vh;}
+  .busiest{
+    font-size:1.05vw;color:var(--text);
+    background:rgba(255,210,63,0.08);border:1px solid rgba(255,210,63,0.45);
+    border-radius:10px;padding:0.3vh 1vw;
+  }
+  .busiest b{color:var(--gold);text-shadow:0 0 10px rgba(255,210,63,0.5);}
+  .timeline{
+    flex:1;
+    display:flex;align-items:flex-end;
+    border:1px solid var(--panel-border);border-radius:14px;
+    background:linear-gradient(160deg, var(--panel), #070b14);
+    padding:1vh 0.8vw 0.6vh 0.8vw;
+    gap:0.3vw;
+  }
+  .hour-col{
+    flex:1;height:100%;
+    display:flex;flex-direction:column;align-items:center;justify-content:flex-end;
+  }
+  .hour-bar{
+    width:70%;
+    border-radius:4px 4px 0 0;
+    background:linear-gradient(180deg, var(--cyan), #0a4a5c);
+    box-shadow:0 0 10px rgba(0,229,255,0.35);
+    min-height:2px;
+  }
+  .hour-col.peak .hour-bar{
+    background:linear-gradient(180deg, var(--gold), #7a5a00);
+    box-shadow:0 0 14px rgba(255,210,63,0.65);
+  }
+  .hour-count{font-size:0.75vw;color:var(--text);margin-bottom:0.2vh;}
+  .hour-col.peak .hour-count{color:var(--gold);font-weight:800;}
+  .hour-label{font-size:0.65vw;color:var(--sub);margin-top:0.3vh;}
 
-  /* ===== SHIFT CARDS ===== */
-  .shift-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+  /* SHIFT SECTION */
+  .shift-wrap{display:flex;flex-direction:column;}
+  .shift-row{
+    flex:1;
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap:1.2vw;
+  }
   .shift-card{
-    background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:18px 20px;
+    border-radius:16px;border:1px solid var(--panel-border);
+    background:linear-gradient(160deg, var(--panel), #070b14);
+    padding:1vh 1.4vw;
+    display:flex;flex-direction:column;
   }
-  .shift-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px;}
-  .shift-name{font-family:'Oswald',sans-serif;font-size:15px;font-weight:600;color:var(--text);text-transform:uppercase;letter-spacing:0.5px;}
-  .shift-hours{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text-faint);}
-  .shift-meter-row{margin-bottom:12px;}
-  .shift-meter-row:last-child{margin-bottom:0;}
-  .shift-meter-top{display:flex;justify-content:space-between;font-size:11.5px;margin-bottom:5px;color:var(--text-dim);}
-  .shift-meter-track{position:relative;height:14px;background:var(--bg);border-radius:3px;overflow:hidden;border:1px solid var(--border-soft);}
-  .shift-meter-fill{position:absolute;top:0;left:0;height:100%;border-radius:3px 0 0 3px;background:var(--green);}
-  .shift-meter-target{position:absolute;top:-2px;bottom:-2px;width:1.5px;background:var(--amber);}
-  .shift-summary{
-    margin-top:14px;padding-top:12px;border-top:1px solid var(--border-soft);
-    font-size:10.5px;color:var(--text-faint);text-align:center;font-family:'IBM Plex Mono',monospace;
-    text-transform:uppercase;letter-spacing:0.5px;
+  .shift-card .shift-name{
+    font-size:1.35vw;font-weight:800;color:var(--cyan);letter-spacing:0.05em;
+    text-shadow:0 0 12px rgba(0,229,255,0.4);
   }
-
-  footer{
-    margin-top:20px;padding-top:20px;border-top:1px solid var(--border);
-    font-size:11.5px;color:var(--text-faint);font-family:'IBM Plex Mono',monospace;
-    display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;
-  }
-
-  @media (max-width:900px){
-    .kpi-grid{grid-template-columns:repeat(2,1fr);}
-    .shift-grid{grid-template-columns:1fr;}
-    .period-block{text-align:left;}
-  }
+  .shift-card .shift-time{font-size:0.9vw;color:var(--sub);margin-bottom:0.6vh;}
+  .shift-stats{display:flex;justify-content:space-between;flex:1;align-items:center;}
+  .shift-stat{text-align:center;flex:1;}
+  .shift-stat .n{font-size:2.1vw;font-weight:800;color:var(--text);}
+  .shift-stat .n.duration-hot{color:#ff8c1a;text-shadow:0 0 16px rgba(255,140,26,0.6);}
+  .shift-stat .l{font-size:0.75vw;color:var(--sub);text-transform:uppercase;letter-spacing:0.05em;}
+  .shift-nena{display:flex;justify-content:space-around;margin-top:0.6vh;padding-top:0.6vh;border-top:1px solid var(--panel-border);}
+  .shift-nena div{text-align:center;}
+  .shift-nena .v{font-size:1.4vw;font-weight:800;}
+  .shift-nena .k{font-size:0.7vw;color:var(--sub);}
 </style>
 </head>
 <body>
+<div class="wrap">
 
-<header>
-  <div class="wrap">
-    <div class="head-row">
-      <div class="head-left">
-        <div class="badge">911</div>
-        <div class="head-titles">
-          <div class="eyebrow">Emergency Communications Center</div>
-          <h1>Anderson County 911</h1>
-          <div class="head-sub">Daily Answer Time Dashboard</div>
-        </div>
-      </div>
-      <div class="period-block">
-        <div class="month">JUL 30, 2026</div>
-        <div class="vs">SINGLE-DAY SNAPSHOT · ALL AGENCIES</div>
-      </div>
+  <div class="header">
+    <div>
+      <div class="title">ANDERSON COUNTY <span>ECC</span></div>
+      <div class="subtitle">Daily Operations Dashboard &nbsp;·&nbsp; Previous Day Overview</div>
     </div>
+    <div class="clockbox">
+      <div class="clock" id="clock">--:--:--</div>
+      <div class="clockdate" id="today"></div>
+    </div>
+  </div>
 
-    <div class="note">
-      <div class="note-icon">NOTE</div>
-      <div class="note-body">
-        <div class="note-title">Full-day answer time compliance was perfect</div>
-        <div class="note-text">100% of calls were answered within 10, 15, and 20 seconds on Jul 30 — well ahead of the 90%/95% NENA thresholds. This file doesn't include an hourly breakdown, so the shift panels below can't be populated until an hourly export is provided for this date.</div>
+  <div class="metrics-row">
+    <div class="card c-cyan">
+      <div class="val">57</div>
+      <div class="lbl">911 Calls Answered</div>
+    </div>
+    <div class="card c-red">
+      <div class="val">2</div>
+      <div class="lbl">911 Abandoned</div>
+    </div>
+    <div class="card">
+      <div class="val abandon-rate" id="abandonRate" data-pct="3.39">3.39%</div>
+      <div class="lbl">Abandon Rate</div>
+    </div>
+    <div class="card c-magenta">
+      <div class="val">254</div>
+      <div class="lbl">Non-911 / Admin</div>
+    </div>
+    <div class="card c-cyan">
+      <div class="val">67</div>
+      <div class="lbl">Outbound Calls</div>
+    </div>
+    <div class="card c-green">
+      <div class="val">380</div>
+      <div class="lbl">Total Call Volume</div>
+    </div>
+  </div>
+
+  <div class="nena-wrap">
+    <div class="section-title">NENA 911 Answer Time Standard — Report Date 08/03/2026</div>
+    <div class="nena-row">
+      <div class="nena-card excellence">
+        <div class="badge">Internal Goal</div>
+        <div class="goal">Excellence Target</div>
+        <div class="pct status-gold">88.14%</div>
+        <div class="desc">Answered ≤ 10 Seconds</div>
+        <div class="pill pill-gold">APPROACHING GOAL</div>
+      </div>
+      <div class="nena-card">
+        <div class="badge">NENA Standard</div>
+        <div class="goal">Target: 90% ≤ 15s</div>
+        <div class="pct status-pass">98.31%</div>
+        <div class="desc">Answered ≤ 15 Seconds</div>
+        <div class="pill pill-pass">MEETS STANDARD</div>
+      </div>
+      <div class="nena-card">
+        <div class="badge">NENA Standard</div>
+        <div class="goal">Target: 95% ≤ 20s</div>
+        <div class="pct status-pass">100.00%</div>
+        <div class="desc">Answered ≤ 20 Seconds</div>
+        <div class="pill pill-pass">MEETS STANDARD</div>
       </div>
     </div>
   </div>
-</header>
 
-<main class="wrap">
-
-  <!-- HERO KPIs -->
-  <section>
-    <div class="kpi-grid">
-      <div class="kpi-card">
-        <div class="kpi-label">Total 911 Calls</div>
-        <div class="kpi-value">59</div>
-        <div class="kpi-sub">56 answered · 3 abandoned</div>
-      </div>
-      <div class="kpi-card good">
-        <div class="kpi-label">Avg. Answer Time</div>
-        <div class="kpi-value">4.86<span class="kpi-unit">sec</span></div>
-        <div class="kpi-sub green">Within NENA standard</div>
-      </div>
-      <div class="kpi-card good">
-        <div class="kpi-label">Answered ≤ 15 Sec</div>
-        <div class="kpi-value">100<span class="kpi-unit">%</span></div>
-        <div class="kpi-sub green">vs 90% NENA target</div>
-      </div>
-      <div class="kpi-card good">
-        <div class="kpi-label">Answered ≤ 20 Sec</div>
-        <div class="kpi-value">100<span class="kpi-unit">%</span></div>
-        <div class="kpi-sub green">vs 95% NENA target</div>
-      </div>
+  <div class="timeline-wrap">
+    <div class="timeline-header">
+      <div class="section-title" style="margin-bottom:0;">24-Hour 911 Call Volume — Report Date 08/03/2026</div>
+      <div class="busiest">Busiest Hour: <b>5:00 PM – 5:59 PM</b> &nbsp;(<b>5</b> calls)</div>
     </div>
-  </section>
-
-  <!-- FULL DAY ANSWER TIME -->
-  <section>
-    <div class="section-head">
-      <div class="section-title">911 Answer Time Compliance — Full Day</div>
-      <div class="section-note">NENA STANDARD · 90% ≤15s · 95% ≤20s</div>
+    <div class="timeline" id="timeline">
+      <!-- hour columns injected by JS from hourly data -->
     </div>
-    <div class="panel">
-      <div class="panel-title">Jul 30, 2026 · 00:00–23:59</div>
+  </div>
 
-      <div class="meter-row">
-        <div class="meter-top"><span class="m-label">Answered ≤ 10 seconds</span><span class="m-vals">100.00%</span></div>
-        <div class="meter-track"><div class="meter-fill" style="width:100%"></div></div>
+  <div class="shift-wrap">
+    <div class="section-title">911 Call Volume &amp; Answer Performance by Shift</div>
+    <div class="shift-row">
+
+      <div class="shift-card">
+        <div class="shift-name">DAY SHIFT</div>
+        <div class="shift-time">0700 – 1500</div>
+        <div class="shift-stats">
+          <div class="shift-stat"><div class="n">19</div><div class="l">Calls Answered</div></div>
+          <div class="shift-stat"><div class="n dur" data-secs="175">175s</div><div class="l">Avg Call Duration</div></div>
+        </div>
+        <div class="shift-nena">
+          <div><div class="v status-gold">89.5%</div><div class="k">≤10s</div></div>
+          <div><div class="v status-pass">100%</div><div class="k">≤15s</div></div>
+          <div><div class="v status-pass">100%</div><div class="k">≤20s</div></div>
+        </div>
       </div>
 
-      <div class="meter-row">
-        <div class="meter-top"><span class="m-label">Answered ≤ 15 seconds</span><span class="m-vals">100.00%</span></div>
-        <div class="meter-track"><div class="meter-fill" style="width:100%"></div><div class="meter-target-line" style="left:90%"></div></div>
+      <div class="shift-card">
+        <div class="shift-name">EVENING SHIFT</div>
+        <div class="shift-time">1500 – 2300</div>
+        <div class="shift-stats">
+          <div class="shift-stat"><div class="n">24</div><div class="l">Calls Answered</div></div>
+          <div class="shift-stat"><div class="n dur" data-secs="128">128s</div><div class="l">Avg Call Duration</div></div>
+        </div>
+        <div class="shift-nena">
+          <div><div class="v status-gold">83.3%</div><div class="k">≤10s</div></div>
+          <div><div class="v status-pass">100%</div><div class="k">≤15s</div></div>
+          <div><div class="v status-pass">100%</div><div class="k">≤20s</div></div>
+        </div>
       </div>
 
-      <div class="meter-row" style="margin-bottom:0;">
-        <div class="meter-top"><span class="m-label">Answered ≤ 20 seconds</span><span class="m-vals">100.00%</span></div>
-        <div class="meter-track"><div class="meter-fill" style="width:100%"></div><div class="meter-target-line" style="left:95%"></div></div>
+      <div class="shift-card">
+        <div class="shift-name">OVERNIGHT SHIFT</div>
+        <div class="shift-time">2300 – 0700</div>
+        <div class="shift-stats">
+          <div class="shift-stat"><div class="n">14</div><div class="l">Calls Answered</div></div>
+          <div class="shift-stat"><div class="n dur" data-secs="157">157s</div><div class="l">Avg Call Duration</div></div>
+        </div>
+        <div class="shift-nena">
+          <div><div class="v status-gold">92.9%</div><div class="k">≤10s</div></div>
+          <div><div class="v status-pass">92.9%</div><div class="k">≤15s</div></div>
+          <div><div class="v status-pass">100%</div><div class="k">≤20s</div></div>
+        </div>
       </div>
 
-      <div class="meter-legend">
-        <span><span class="legend-dot" style="background:var(--green)"></span>Jul 30, 2026</span>
-        <span><span class="legend-dot" style="background:var(--amber)"></span>NENA threshold</span>
-      </div>
     </div>
-  </section>
+  </div>
 
-  <!-- SHIFT BREAKDOWN -->
-  <section>
-    <div class="section-head">
-      <div class="section-title">Answer Time by Dispatch Shift</div>
-      <div class="section-note">AWAITING HOURLY EXPORT FOR JUL 30</div>
-    </div>
-    <div class="shift-grid">
-      <div class="shift-card" style="border-style:dashed;">
-        <div class="shift-head"><span class="shift-name">Day Shift</span><span class="shift-hours">07:00–15:00</span></div>
-        <div class="shift-meter-row">
-          <div class="shift-meter-top"><span>Answered ≤ 10 sec</span><span>—</span></div>
-          <div class="shift-meter-track" style="border-style:dashed;"></div>
-        </div>
-        <div class="shift-meter-row">
-          <div class="shift-meter-top"><span>Answered ≤ 15 sec</span><span>—</span></div>
-          <div class="shift-meter-track" style="border-style:dashed;"><div class="shift-meter-target" style="left:90%"></div></div>
-        </div>
-        <div class="shift-meter-row">
-          <div class="shift-meter-top"><span>Answered ≤ 20 sec</span><span>—</span></div>
-          <div class="shift-meter-track" style="border-style:dashed;"><div class="shift-meter-target" style="left:95%"></div></div>
-        </div>
-        <div class="shift-summary">No data uploaded</div>
-      </div>
+</div>
 
-      <div class="shift-card" style="border-style:dashed;">
-        <div class="shift-head"><span class="shift-name">Evening Shift</span><span class="shift-hours">15:00–23:00</span></div>
-        <div class="shift-meter-row">
-          <div class="shift-meter-top"><span>Answered ≤ 10 sec</span><span>—</span></div>
-          <div class="shift-meter-track" style="border-style:dashed;"></div>
-        </div>
-        <div class="shift-meter-row">
-          <div class="shift-meter-top"><span>Answered ≤ 15 sec</span><span>—</span></div>
-          <div class="shift-meter-track" style="border-style:dashed;"><div class="shift-meter-target" style="left:90%"></div></div>
-        </div>
-        <div class="shift-meter-row">
-          <div class="shift-meter-top"><span>Answered ≤ 20 sec</span><span>—</span></div>
-          <div class="shift-meter-track" style="border-style:dashed;"><div class="shift-meter-target" style="left:95%"></div></div>
-        </div>
-        <div class="shift-summary">No data uploaded</div>
-      </div>
+<script>
+function pad(n){return n.toString().padStart(2,'0');}
+function tick(){
+  const now = new Date();
+  document.getElementById('clock').textContent =
+    pad(now.getHours())+':'+pad(now.getMinutes())+':'+pad(now.getSeconds());
+  const days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const months=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  document.getElementById('today').textContent =
+    days[now.getDay()]+', '+months[now.getMonth()]+' '+now.getDate()+', '+now.getFullYear();
+}
+tick();
+setInterval(tick,1000);
 
-      <div class="shift-card" style="border-style:dashed;">
-        <div class="shift-head"><span class="shift-name">Overnight Shift</span><span class="shift-hours">23:00–07:00</span></div>
-        <div class="shift-meter-row">
-          <div class="shift-meter-top"><span>Answered ≤ 10 sec</span><span>—</span></div>
-          <div class="shift-meter-track" style="border-style:dashed;"></div>
-        </div>
-        <div class="shift-meter-row">
-          <div class="shift-meter-top"><span>Answered ≤ 15 sec</span><span>—</span></div>
-          <div class="shift-meter-track" style="border-style:dashed;"><div class="shift-meter-target" style="left:90%"></div></div>
-        </div>
-        <div class="shift-meter-row">
-          <div class="shift-meter-top"><span>Answered ≤ 20 sec</span><span>—</span></div>
-          <div class="shift-meter-track" style="border-style:dashed;"><div class="shift-meter-target" style="left:95%"></div></div>
-        </div>
-        <div class="shift-summary">No data uploaded</div>
-      </div>
-    </div>
-    <div class="meter-legend">
-      <span>Upload an hourly export (Time Group: 60 Minute) for Jul 30 to populate these panels.</span>
-    </div>
-  </section>
+// 24-hour 911 call volume (from HourlySpeedOfAnswerRollup, 08/03/2026)
+const hourly = [1,1,2,3,0,2,2,3,2,0,2,4,2,2,4,2,3,5,4,2,2,4,2,3];
+const maxCalls = Math.max(...hourly);
+const tl = document.getElementById('timeline');
+hourly.forEach((count, hr) => {
+  const col = document.createElement('div');
+  col.className = 'hour-col' + (count === maxCalls ? ' peak' : '');
+  const pct = maxCalls > 0 ? Math.max((count / maxCalls) * 100, count > 0 ? 6 : 2) : 2;
+  col.innerHTML =
+    '<div class="hour-count">'+count+'</div>' +
+    '<div class="hour-bar" style="height:'+pct+'%;"></div>' +
+    '<div class="hour-label">'+String(hr).padStart(2,'0')+'</div>';
+  tl.appendChild(col);
+});
 
-  <footer>
-    <span>Source: Top PSAP Metrics – Answer Time · Anderson County Emergency Communications · Report date 07/31/2026</span>
-    <span>Generated report — all figures as submitted in source data</span>
-  </footer>
+// Orange highlight rule: any avg call duration >= 180 seconds
+document.querySelectorAll('.dur').forEach(el => {
+  const secs = parseFloat(el.dataset.secs);
+  if (secs >= 180) el.classList.add('duration-hot');
+});
 
-</main>
+// Abandon rate: green by default, orange if it exceeds 8%
+const abandonEl = document.getElementById('abandonRate');
+const abandonPct = parseFloat(abandonEl.dataset.pct);
+abandonEl.classList.add(abandonPct > 8 ? 'rate-hot' : 'rate-ok');
+</script>
+
 </body>
 </html>
