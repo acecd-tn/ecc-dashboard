@@ -119,6 +119,7 @@
     background:rgba(255,210,63,0.08);border:1px solid rgba(255,210,63,0.45);
     border-radius:10px;padding:0.3vh 1vw;
   }
+  .busiest.tie{font-size:0.85vw;}
   .busiest b{color:var(--gold);}
   .timeline{
     flex:1;min-height:0;
@@ -248,7 +249,7 @@
   <div class="timeline-wrap">
     <div class="timeline-header">
       <div class="section-title" style="margin-bottom:0;">24-Hour 911 Call Volume — Report Date 08/04/2026</div>
-      <div class="busiest">Busiest Hour: <b>4:00 AM – 4:59 AM</b> &nbsp;(<b>5</b> calls)</div>
+      <div class="busiest" id="busiest">Busiest Hour: <b>—</b></div>
     </div>
     <div class="timeline" id="timeline">
       <!-- hour columns injected by JS from hourly data -->
@@ -267,7 +268,7 @@
           <div class="shift-stat"><div class="n dur" data-secs="140">140s</div><div class="l">Avg Call Duration</div></div>
         </div>
         <div class="shift-nena">
-          <div><div class="v status-gold">88.2%</div><div class="k">≤10s</div></div>
+          <div><div class="v ten-sec" data-tenpct="88.2">88.2%</div><div class="k">≤10s</div></div>
           <div><div class="v status-pass">100.0%</div><div class="k">≤15s</div></div>
           <div><div class="v status-pass">100.0%</div><div class="k">≤20s</div></div>
         </div>
@@ -281,7 +282,7 @@
           <div class="shift-stat"><div class="n dur" data-secs="116">116s</div><div class="l">Avg Call Duration</div></div>
         </div>
         <div class="shift-nena">
-          <div><div class="v status-gold">95.8%</div><div class="k">≤10s</div></div>
+          <div><div class="v ten-sec" data-tenpct="95.8">95.8%</div><div class="k">≤10s</div></div>
           <div><div class="v status-pass">100.0%</div><div class="k">≤15s</div></div>
           <div><div class="v status-pass">100.0%</div><div class="k">≤20s</div></div>
         </div>
@@ -295,7 +296,7 @@
           <div class="shift-stat"><div class="n dur" data-secs="184">184s</div><div class="l">Avg Call Duration</div></div>
         </div>
         <div class="shift-nena">
-          <div><div class="v status-gold">94.1%</div><div class="k">≤10s</div></div>
+          <div><div class="v ten-sec" data-tenpct="94.1">94.1%</div><div class="k">≤10s</div></div>
           <div><div class="v status-pass">100.0%</div><div class="k">≤15s</div></div>
           <div><div class="v status-pass">100.0%</div><div class="k">≤20s</div></div>
         </div>
@@ -322,10 +323,39 @@ hourly.forEach((count, hr) => {
   tl.appendChild(col);
 });
 
+// Busiest hour callout — computed here so ties are always reflected correctly
+function hourRangeLabel(hr){
+  const period = hr < 12 ? 'AM' : 'PM';
+  let h12 = hr % 12; if (h12 === 0) h12 = 12;
+  return h12 + ':00 ' + period + ' – ' + h12 + ':59 ' + period;
+}
+function shortHourLabel(hr){
+  const period = hr < 12 ? 'AM' : 'PM';
+  let h12 = hr % 12; if (h12 === 0) h12 = 12;
+  return h12 + ' ' + period;
+}
+const peakHours = hourly.reduce((arr, c, i) => c === maxCalls ? arr.concat(i) : arr, []);
+const busiestEl = document.getElementById('busiest');
+if (peakHours.length === 1) {
+  busiestEl.innerHTML = 'Busiest Hour: <b>' + hourRangeLabel(peakHours[0]) + '</b> &nbsp;(<b>' + maxCalls + '</b> calls)';
+} else if (peakHours.length <= 4) {
+  busiestEl.classList.add('tie');
+  busiestEl.innerHTML = 'Busiest Hours (' + peakHours.length + '-way tie): <b>' + peakHours.map(shortHourLabel).join(', ') + '</b> &nbsp;(<b>' + maxCalls + '</b> calls each)';
+} else {
+  busiestEl.classList.add('tie');
+  busiestEl.innerHTML = '<b>' + peakHours.length + '</b> Hours Tied at <b>' + maxCalls + '</b> Calls Each';
+}
+
 // Orange highlight rule: any avg call duration >= 180 seconds
 document.querySelectorAll('.dur').forEach(el => {
   const secs = parseFloat(el.dataset.secs);
   if (secs >= 180) el.classList.add('duration-hot');
+});
+
+// Shift ≤10s internal-goal coloring: green if >= 90%, orange otherwise (matches the 90% internal goal, not a fixed color)
+document.querySelectorAll('.ten-sec').forEach(el => {
+  const pct = parseFloat(el.dataset.tenpct);
+  el.classList.add(pct >= 90 ? 'status-pass' : 'status-gold');
 });
 
 // Abandon rate: green by default, orange if it exceeds 8%
