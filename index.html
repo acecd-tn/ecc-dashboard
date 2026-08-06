@@ -163,7 +163,10 @@
   .shift-card .shift-name{
     font-size:1.3vw;font-weight:800;color:var(--cyan);letter-spacing:0.05em;
     flex-shrink:0;
+    display:flex;align-items:center;gap:0.4vw;
   }
+  .shift-star{color:var(--gold);font-size:1.3vw;display:none;line-height:1;}
+  .shift-star.show{display:inline;}
   .shift-card .shift-time{font-size:0.85vw;color:var(--sub);margin-bottom:0.5vh;flex-shrink:0;}
   .shift-stats{display:flex;justify-content:space-between;flex:1;align-items:center;min-height:0;}
   .shift-stat{text-align:center;flex:1;}
@@ -261,7 +264,7 @@
     <div class="shift-row">
 
       <div class="shift-card">
-        <div class="shift-name">DAY SHIFT</div>
+        <div class="shift-name">DAY SHIFT <span class="shift-star">★</span></div>
         <div class="shift-time">0700 – 1500</div>
         <div class="shift-stats">
           <div class="shift-stat"><div class="n">14</div><div class="l">Calls Answered</div></div>
@@ -269,13 +272,13 @@
         </div>
         <div class="shift-nena">
           <div><div class="v ten-sec" data-tenpct="100.0">100.0%</div><div class="k">≤10s</div></div>
-          <div><div class="v status-pass">100.0%</div><div class="k">≤15s</div></div>
-          <div><div class="v status-pass">100.0%</div><div class="k">≤20s</div></div>
+          <div><div class="v status-pass" data-pct15="100.0">100.0%</div><div class="k">≤15s</div></div>
+          <div><div class="v status-pass" data-pct20="100.0">100.0%</div><div class="k">≤20s</div></div>
         </div>
       </div>
 
       <div class="shift-card">
-        <div class="shift-name">EVENING SHIFT</div>
+        <div class="shift-name">EVENING SHIFT <span class="shift-star">★</span></div>
         <div class="shift-time">1500 – 2300</div>
         <div class="shift-stats">
           <div class="shift-stat"><div class="n">21</div><div class="l">Calls Answered</div></div>
@@ -283,13 +286,13 @@
         </div>
         <div class="shift-nena">
           <div><div class="v ten-sec" data-tenpct="100.0">100.0%</div><div class="k">≤10s</div></div>
-          <div><div class="v status-pass">100.0%</div><div class="k">≤15s</div></div>
-          <div><div class="v status-pass">100.0%</div><div class="k">≤20s</div></div>
+          <div><div class="v status-pass" data-pct15="100.0">100.0%</div><div class="k">≤15s</div></div>
+          <div><div class="v status-pass" data-pct20="100.0">100.0%</div><div class="k">≤20s</div></div>
         </div>
       </div>
 
       <div class="shift-card">
-        <div class="shift-name">OVERNIGHT SHIFT</div>
+        <div class="shift-name">OVERNIGHT SHIFT <span class="shift-star">★</span></div>
         <div class="shift-time">2300 – 0700</div>
         <div class="shift-stats">
           <div class="shift-stat"><div class="n">15</div><div class="l">Calls Answered</div></div>
@@ -297,8 +300,8 @@
         </div>
         <div class="shift-nena">
           <div><div class="v ten-sec" data-tenpct="93.3">93.3%</div><div class="k">≤10s</div></div>
-          <div><div class="v status-pass">100.0%</div><div class="k">≤15s</div></div>
-          <div><div class="v status-pass">100.0%</div><div class="k">≤20s</div></div>
+          <div><div class="v status-pass" data-pct15="100.0">100.0%</div><div class="k">≤15s</div></div>
+          <div><div class="v status-pass" data-pct20="100.0">100.0%</div><div class="k">≤20s</div></div>
         </div>
       </div>
 
@@ -362,6 +365,20 @@ document.querySelectorAll('.ten-sec').forEach(el => {
 const abandonEl = document.getElementById('abandonRate');
 const abandonPct = parseFloat(abandonEl.dataset.pct);
 abandonEl.classList.add(abandonPct > 8 ? 'rate-hot' : 'rate-ok');
+
+// Perfect-shift gold star: show when a shift hits 100% on all three answer-time metrics (≤10s, ≤15s, ≤20s)
+document.querySelectorAll('.shift-card').forEach(card => {
+  const tenEl = card.querySelector('.ten-sec');
+  const fifteenEl = card.querySelector('[data-pct15]');
+  const twentyEl = card.querySelector('[data-pct20]');
+  const ten = tenEl ? parseFloat(tenEl.dataset.tenpct) : 0;
+  const fifteen = fifteenEl ? parseFloat(fifteenEl.dataset.pct15) : 0;
+  const twenty = twentyEl ? parseFloat(twentyEl.dataset.pct20) : 0;
+  if (ten >= 99.95 && fifteen >= 99.95 && twenty >= 99.95) {
+    const star = card.querySelector('.shift-star');
+    if (star) star.classList.add('show');
+  }
+});
 </script>
 
 </body>
