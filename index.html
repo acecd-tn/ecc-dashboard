@@ -27,7 +27,7 @@
   .wrap{
     width:100vw;height:100vh;
     display:grid;
-    grid-template-rows: 9vh 14vh 21vh 19vh 24vh;
+    grid-template-rows: 9vh 14vh 19vh 21vh 24vh;
     gap: 1vh;
     padding: 1.5vh 1.8vw;
   }
@@ -44,6 +44,7 @@
     line-height:1.15;
   }
   .header .subtitle{font-size:1.0vw;color:var(--sub);margin-top:0.2vh;letter-spacing:0.05em;}
+  .header .source{font-size:0.75vw;color:var(--sub);margin-top:0.6vh;letter-spacing:0.03em;text-align:right;}
   .metrics-row{
     display:grid;
     grid-template-columns: repeat(6, 1fr);
@@ -87,7 +88,6 @@
     padding:0.7vh 1.2vw;
     overflow:hidden;min-height:0;
   }
-  .nena-card.status-gold{border-color: rgba(255,210,63,0.5);}
   .nena-card .labels-row{
     width:100%;display:flex;justify-content:space-between;
     margin-bottom:0.7vh;
@@ -119,7 +119,6 @@
   .timeline-header .section-title{white-space:nowrap;margin-bottom:0;}
   .tl-legend{display:flex;align-items:center;gap:0.7vw;font-size:0.8vw;color:var(--sub);white-space:nowrap;flex-shrink:0;}
   .tl-legend .dot{width:0.7vw;height:0.7vw;border-radius:50%;display:inline-block;margin-right:0.25vw;vertical-align:middle;}
-  .dot-911{background:var(--cyan);}
   .dot-admin{background:var(--admin-blue);}
   .busiest{
     font-size:1.0vw;color:var(--text);white-space:nowrap;
@@ -147,55 +146,41 @@
     display:flex;align-items:flex-end;justify-content:center;
     gap:0.15vw;
   }
-  .hour-bar-911{
-    width:38%;
-    border-radius:3px 3px 0 0;
-    background:linear-gradient(180deg, var(--cyan), #0a4a5c);
-    min-height:2px;
-  }
   .hour-bar-admin{
-    width:38%;
+    width:55%;
     border-radius:3px 3px 0 0;
     background:linear-gradient(180deg, var(--admin-blue), #1c3a57);
     min-height:2px;
   }
-  .hour-bar-911.peak, .hour-bar-admin.peak{
+  .hour-bar-admin.peak{
     background:linear-gradient(180deg, var(--gold), #7a5a00);
   }
   .hour-count{font-size:0.7vw;color:var(--text);margin-bottom:0.2vh;}
   .hour-count.peak{color:var(--gold);font-weight:800;}
   .hour-label{font-size:0.65vw;color:var(--sub);margin-top:0.3vh;}
-  .shift-wrap{display:flex;flex-direction:column;min-height:0;}
-  .shift-row{
+  .extra-wrap{display:flex;flex-direction:column;min-height:0;}
+  .extra-row{
     flex:1;min-height:0;
     display:grid;
     grid-template-columns: repeat(3, 1fr);
     gap:1.2vw;
   }
-  .shift-card{
+  .extra-card{
     border-radius:16px;border:1px solid var(--panel-border);
     background:linear-gradient(160deg, var(--panel), #070b14);
     padding:0.8vh 1.4vw;
     display:flex;flex-direction:column;
     overflow:hidden;min-height:0;
   }
-  .shift-card .shift-name{
+  .extra-card .extra-name{
     font-size:1.3vw;font-weight:800;color:var(--cyan);letter-spacing:0.05em;
     flex-shrink:0;
-    display:flex;align-items:center;gap:0.4vw;
+    margin-bottom:0.5vh;
   }
-  .shift-star{color:var(--gold);font-size:1.3vw;display:none;line-height:1;}
-  .shift-star.show{display:inline;}
-  .shift-card .shift-time{font-size:0.85vw;color:var(--sub);margin-bottom:0.5vh;flex-shrink:0;}
-  .shift-stats{display:flex;justify-content:space-between;flex:1;align-items:center;min-height:0;}
-  .shift-stat{text-align:center;flex:1;}
-  .shift-stat .n{font-size:1.9vw;font-weight:800;color:var(--text);}
-  .shift-stat .n.duration-hot{color:#ff8c1a;}
-  .shift-stat .l{font-size:0.7vw;color:var(--sub);text-transform:uppercase;letter-spacing:0.05em;}
-  .shift-nena{display:flex;justify-content:space-around;margin-top:0.5vh;padding-top:0.5vh;border-top:1px solid var(--panel-border);flex-shrink:0;}
-  .shift-nena div{text-align:center;}
-  .shift-nena .v{font-size:1.3vw;font-weight:800;}
-  .shift-nena .k{font-size:0.65vw;color:var(--sub);}
+  .extra-stats{display:flex;flex-direction:column;justify-content:space-around;flex:1;min-height:0;gap:0.2vh;}
+  .extra-line{display:flex;justify-content:space-between;align-items:baseline;}
+  .extra-line .k{font-size:0.85vw;color:var(--sub);}
+  .extra-line .v{font-size:1.3vw;font-weight:800;color:var(--text);}
 </style>
 </head>
 <body>
@@ -204,13 +189,14 @@
   <div class="header">
     <div>
       <div class="title">ANDERSON COUNTY EMERGENCY COMMUNICATIONS</div>
-      <div class="subtitle">Daily Operations Dashboard &nbsp;·&nbsp; Previous Day Overview</div>
+      <div class="subtitle">Daily Operations Dashboard &nbsp;·&nbsp; Report Date: 08/14/2026 (Previous Day)</div>
     </div>
+    <div class="source">Source: TopTenMetrics 2026-08-15_0707.xlsx<br>&amp; CallsPerHourRollup 2026-08-15_0710.xlsx</div>
   </div>
 
   <div class="metrics-row">
     <div class="card c-cyan">
-      <div class="val">55</div>
+      <div class="val">62</div>
       <div class="lbl">911 Calls Answered</div>
     </div>
     <div class="card c-red">
@@ -218,32 +204,32 @@
       <div class="lbl">911 Abandoned</div>
     </div>
     <div class="card">
-      <div class="val abandon-rate" id="abandonRate" data-pct="3.51">3.51%</div>
+      <div class="val abandon-rate" id="abandonRate" data-pct="3.13">3.13%</div>
       <div class="lbl">Abandon Rate</div>
     </div>
     <div class="card c-admin">
-      <div class="val">159</div>
+      <div class="val">189</div>
       <div class="lbl">Non-911 / Admin</div>
     </div>
     <div class="card c-admin">
-      <div class="val">98</div>
+      <div class="val">76</div>
       <div class="lbl">Outbound Calls</div>
     </div>
     <div class="card c-green">
-      <div class="val">319</div>
+      <div class="val">330</div>
       <div class="lbl">Total Call Volume</div>
     </div>
   </div>
 
   <div class="nena-wrap">
-    <div class="section-title">NENA 911 Answer Time Standard — Report Date 08/13/2026</div>
+    <div class="section-title">NENA 911 Answer Time Standard — Report Date 08/14/2026 &nbsp;·&nbsp; Avg Answer Time: 4.61s</div>
     <div class="nena-row">
-      <div class="nena-card excellence status-pass">
+      <div class="nena-card">
         <div class="labels-row">
           <div class="badge">Internal Goal</div>
           <div class="goal">Target: 90% ≤ 10s</div>
         </div>
-        <div class="pct status-pass">92.98%</div>
+        <div class="pct status-pass">96.88%</div>
         <div class="desc">Answered ≤ 10 Seconds</div>
         <div class="pill pill-pass">GOAL MET</div>
       </div>
@@ -252,7 +238,7 @@
           <div class="badge">NENA Standard</div>
           <div class="goal">Target: 90% ≤ 15s</div>
         </div>
-        <div class="pct status-pass">96.49%</div>
+        <div class="pct status-pass">100.00%</div>
         <div class="desc">Answered ≤ 15 Seconds</div>
         <div class="pill pill-pass">MEETS STANDARD</div>
       </div>
@@ -261,7 +247,7 @@
           <div class="badge">NENA Standard</div>
           <div class="goal">Target: 95% ≤ 20s</div>
         </div>
-        <div class="pct status-pass">98.25%</div>
+        <div class="pct status-pass">100.00%</div>
         <div class="desc">Answered ≤ 20 Seconds</div>
         <div class="pill pill-pass">MEETS STANDARD</div>
       </div>
@@ -271,59 +257,48 @@
   <div class="timeline-wrap">
     <div class="timeline-header">
       <div class="tl-left">
-        <div class="section-title">24-Hour Call Volume — 911 &amp; Admin — Report Date 08/13/2026</div>
-        <div class="tl-legend"><span class="dot dot-911"></span>911<span class="dot dot-admin"></span>Admin</div>
+        <div class="section-title">24-Hour Non-911 / Admin Call Volume — Report Date 08/14/2026</div>
+        <div class="tl-legend"><span class="dot dot-admin"></span>Admin (Inbound)</div>
       </div>
       <div class="busiest" id="busiest">Busiest Hour: <b>—</b></div>
     </div>
     <div class="timeline" id="timeline">
-      <!-- hour columns injected by JS from hourly911/hourlyAdmin data -->
+      <!-- hour columns injected by JS from hourlyAdmin data -->
     </div>
   </div>
 
-  <div class="shift-wrap">
-    <div class="section-title">911 Call Volume &amp; Answer Performance by Shift</div>
-    <div class="shift-row">
+  <div class="extra-wrap">
+    <div class="section-title">Call Mix &amp; Alternate Channels — Report Date 08/14/2026</div>
+    <div class="extra-row">
 
-      <div class="shift-card">
-        <div class="shift-name">DAY SHIFT <span class="shift-star">★</span></div>
-        <div class="shift-time">0700 – 1500</div>
-        <div class="shift-stats">
-          <div class="shift-stat"><div class="n">12</div><div class="l">Calls Answered</div></div>
-          <div class="shift-stat"><div class="n dur" data-secs="114">114s</div><div class="l">Avg Call Duration</div></div>
-        </div>
-        <div class="shift-nena">
-          <div><div class="v ten-sec" data-tenpct="100.0">100.0%</div><div class="k">≤10s</div></div>
-          <div><div class="v status-pass" data-pct15="100.0">100.0%</div><div class="k">≤15s</div></div>
-          <div><div class="v status-pass" data-pct20="100.0">100.0%</div><div class="k">≤20s</div></div>
+      <div class="extra-card">
+        <div class="extra-name">911 CLASS OF SERVICE</div>
+        <div class="extra-stats">
+          <div class="extra-line"><span class="k">Wireless (WRLS)</span><span class="v">59</span></div>
+          <div class="extra-line"><span class="k">Wireline (WRLN)</span><span class="v">0</span></div>
+          <div class="extra-line"><span class="k">VoIP</span><span class="v">5</span></div>
+          <div class="extra-line"><span class="k">TLMA &amp; Other</span><span class="v">0</span></div>
+          <div class="extra-line"><span class="k">No Class of Service</span><span class="v">0</span></div>
         </div>
       </div>
 
-      <div class="shift-card">
-        <div class="shift-name">EVENING SHIFT <span class="shift-star">★</span></div>
-        <div class="shift-time">1500 – 2300</div>
-        <div class="shift-stats">
-          <div class="shift-stat"><div class="n">35</div><div class="l">Calls Answered</div></div>
-          <div class="shift-stat"><div class="n dur" data-secs="135">135s</div><div class="l">Avg Call Duration</div></div>
-        </div>
-        <div class="shift-nena">
-          <div><div class="v ten-sec" data-tenpct="88.6">88.6%</div><div class="k">≤10s</div></div>
-          <div><div class="v status-pass" data-pct15="94.3">94.3%</div><div class="k">≤15s</div></div>
-          <div><div class="v status-pass" data-pct20="97.1">97.1%</div><div class="k">≤20s</div></div>
+      <div class="extra-card">
+        <div class="extra-name">TEXT-TO-911</div>
+        <div class="extra-stats">
+          <div class="extra-line"><span class="k">Inbound Sessions</span><span class="v">1</span></div>
+          <div class="extra-line"><span class="k">Outbound Sessions</span><span class="v">0</span></div>
+          <div class="extra-line"><span class="k">Avg Msgs / Session</span><span class="v">3.00</span></div>
+          <div class="extra-line"><span class="k">Avg Session Duration</span><span class="v">122.0s</span></div>
         </div>
       </div>
 
-      <div class="shift-card">
-        <div class="shift-name">OVERNIGHT SHIFT <span class="shift-star">★</span></div>
-        <div class="shift-time">2300 – 0700</div>
-        <div class="shift-stats">
-          <div class="shift-stat"><div class="n">8</div><div class="l">Calls Answered</div></div>
-          <div class="shift-stat"><div class="n dur" data-secs="230">230s</div><div class="l">Avg Call Duration</div></div>
-        </div>
-        <div class="shift-nena">
-          <div><div class="v ten-sec" data-tenpct="100.0">100.0%</div><div class="k">≤10s</div></div>
-          <div><div class="v status-pass" data-pct15="100.0">100.0%</div><div class="k">≤15s</div></div>
-          <div><div class="v status-pass" data-pct20="100.0">100.0%</div><div class="k">≤20s</div></div>
+      <div class="extra-card">
+        <div class="extra-name">TTY (ALL TYPES)</div>
+        <div class="extra-stats">
+          <div class="extra-line"><span class="k">Inbound Calls</span><span class="v">0</span></div>
+          <div class="extra-line"><span class="k">Outbound Calls</span><span class="v">0</span></div>
+          <div class="extra-line"><span class="k">Avg Msgs / Call</span><span class="v">0.00</span></div>
+          <div class="extra-line"><span class="k">Avg Call Duration</span><span class="v">0.0s</span></div>
         </div>
       </div>
 
@@ -333,39 +308,27 @@
 </div>
 
 <script>
-// 24-hour call volume, TWO series (from HourlySpeedOfAnswerRollup + CallsPerHourRollup/Administrative, 08/13/2026)
-const hourly911 = [0,2,0,0,2,1,2,0,1,0,2,2,1,2,4,3,4,6,1,5,5,10,1,1];
-const hourlyAdmin = [1,5,0,1,2,0,3,2,11,6,14,8,1,14,8,12,7,12,5,10,13,4,14,6];
+// 24-hour Non-911/Admin call volume (from CallsPerHourRollup, Administrative/Inbound, 08/14/2026)
+const hourlyAdmin = [2,3,1,0,2,6,6,7,9,10,18,14,12,11,10,3,15,21,5,15,7,4,4,4];
 
-const max911 = Math.max(...hourly911);
 const maxAdmin = Math.max(...hourlyAdmin);
-const scaleMax = Math.max(max911, maxAdmin); // shared scale so both series are directly comparable
-
-const combined = hourly911.map((v, i) => v + hourlyAdmin[i]);
-const maxCombined = Math.max(...combined);
 
 const tl = document.getElementById('timeline');
-hourly911.forEach((c911, hr) => {
-  const cAdmin = hourlyAdmin[hr];
-  const combinedVal = combined[hr];
+hourlyAdmin.forEach((cAdmin, hr) => {
   const col = document.createElement('div');
   col.className = 'hour-col';
-  const pct911 = scaleMax > 0 ? Math.max((c911 / scaleMax) * 100, c911 > 0 ? 6 : 2) : 2;
-  const pctAdmin = scaleMax > 0 ? Math.max((cAdmin / scaleMax) * 100, cAdmin > 0 ? 6 : 2) : 2;
-  const is911Peak = max911 > 0 && c911 === max911;
+  const pctAdmin = maxAdmin > 0 ? Math.max((cAdmin / maxAdmin) * 100, cAdmin > 0 ? 6 : 2) : 2;
   const isAdminPeak = maxAdmin > 0 && cAdmin === maxAdmin;
-  const isCombinedPeak = combinedVal === maxCombined;
   col.innerHTML =
-    '<div class="hour-count' + (isCombinedPeak ? ' peak' : '') + '">' + combinedVal + '</div>' +
+    '<div class="hour-count' + (isAdminPeak ? ' peak' : '') + '">' + cAdmin + '</div>' +
     '<div class="bar-pair">' +
-      '<div class="hour-bar-911' + (is911Peak ? ' peak' : '') + '" style="height:' + pct911 + '%;"></div>' +
       '<div class="hour-bar-admin' + (isAdminPeak ? ' peak' : '') + '" style="height:' + pctAdmin + '%;"></div>' +
     '</div>' +
     '<div class="hour-label">' + String(hr).padStart(2, '0') + '</div>';
   tl.appendChild(col);
 });
 
-// Busiest hour callout — now based on COMBINED (911 + Admin) volume, ties handled automatically
+// Busiest hour callout
 function hourRangeLabel(hr){
   const period = hr < 12 ? 'AM' : 'PM';
   let h12 = hr % 12; if (h12 === 0) h12 = 12;
@@ -376,48 +339,22 @@ function shortHourLabel(hr){
   let h12 = hr % 12; if (h12 === 0) h12 = 12;
   return h12 + ' ' + period;
 }
-const peakHours = combined.reduce((arr, c, i) => c === maxCombined ? arr.concat(i) : arr, []);
+const peakHours = hourlyAdmin.reduce((arr, c, i) => c === maxAdmin ? arr.concat(i) : arr, []);
 const busiestEl = document.getElementById('busiest');
 if (peakHours.length === 1) {
-  busiestEl.innerHTML = 'Busiest Hour: <b>' + hourRangeLabel(peakHours[0]) + '</b> &nbsp;(<b>' + maxCombined + '</b> calls)';
+  busiestEl.innerHTML = 'Busiest Hour: <b>' + hourRangeLabel(peakHours[0]) + '</b> &nbsp;(<b>' + maxAdmin + '</b> calls)';
 } else if (peakHours.length <= 4) {
   busiestEl.classList.add('tie');
-  busiestEl.innerHTML = 'Busiest Hours (' + peakHours.length + '-way tie): <b>' + peakHours.map(shortHourLabel).join(', ') + '</b> &nbsp;(<b>' + maxCombined + '</b> calls each)';
+  busiestEl.innerHTML = 'Busiest Hours (' + peakHours.length + '-way tie): <b>' + peakHours.map(shortHourLabel).join(', ') + '</b> &nbsp;(<b>' + maxAdmin + '</b> calls each)';
 } else {
   busiestEl.classList.add('tie');
-  busiestEl.innerHTML = '<b>' + peakHours.length + '</b> Hours Tied at <b>' + maxCombined + '</b> Calls Each';
+  busiestEl.innerHTML = '<b>' + peakHours.length + '</b> Hours Tied at <b>' + maxAdmin + '</b> Calls Each';
 }
-
-// Orange highlight rule: any avg call duration >= 180 seconds
-document.querySelectorAll('.dur').forEach(el => {
-  const secs = parseFloat(el.dataset.secs);
-  if (secs >= 180) el.classList.add('duration-hot');
-});
-
-// Shift ≤10s internal-goal coloring: green if >= 90%, orange otherwise
-document.querySelectorAll('.ten-sec').forEach(el => {
-  const pct = parseFloat(el.dataset.tenpct);
-  el.classList.add(pct >= 90 ? 'status-pass' : 'status-gold');
-});
 
 // Abandon rate: green by default, orange if it exceeds 8%
 const abandonEl = document.getElementById('abandonRate');
 const abandonPct = parseFloat(abandonEl.dataset.pct);
 abandonEl.classList.add(abandonPct > 8 ? 'rate-hot' : 'rate-ok');
-
-// Perfect-shift gold star: show when a shift hits 100% on all three answer-time metrics
-document.querySelectorAll('.shift-card').forEach(card => {
-  const tenEl = card.querySelector('.ten-sec');
-  const fifteenEl = card.querySelector('[data-pct15]');
-  const twentyEl = card.querySelector('[data-pct20]');
-  const ten = tenEl ? parseFloat(tenEl.dataset.tenpct) : 0;
-  const fifteen = fifteenEl ? parseFloat(fifteenEl.dataset.pct15) : 0;
-  const twenty = twentyEl ? parseFloat(twentyEl.dataset.pct20) : 0;
-  if (ten >= 99.95 && fifteen >= 99.95 && twenty >= 99.95) {
-    const star = card.querySelector('.shift-star');
-    if (star) star.classList.add('show');
-  }
-});
 </script>
 
 </body>
