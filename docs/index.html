@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Daily Call Volume &amp; NENA Standard Overview — Anderson County ECC</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="masthead">
+    <div>
+      <div class="eyebrow">PSAP Daily Operations Report</div>
+      <h1>Call Volume &amp; NENA Standard Overview</h1>
+      <div class="agency">Anderson County Emergency Communications · 101 South Main, Clinton, TN 37716 · County: Anderson</div>
+    </div>
+    <div class="datebadge">
+      Report Date<br><b>Aug 02, 2026</b>
+    </div>
+  </div>
+
+  <div class="kpi-grid">
+    <div class="kpi" style="--kpi-accent:var(--cyan)">
+      <div class="kpi-label">Total 911 Calls</div>
+      <div class="kpi-value">63</div>
+      <div class="kpi-sub">Answered + Abandoned + Unparsed</div>
+    </div>
+    <div class="kpi" style="--kpi-accent:var(--green)">
+      <div class="kpi-label">Answered</div>
+      <div class="kpi-value">58</div>
+      <div class="kpi-sub">92.06% of total</div>
+    </div>
+    <div class="kpi" style="--kpi-accent:var(--red)">
+      <div class="kpi-label">Abandoned</div>
+      <div class="kpi-value">5</div>
+      <div class="kpi-sub warn">7.94% — above 5% watch level</div>
+    </div>
+    <div class="kpi" style="--kpi-accent:var(--cyan)">
+      <div class="kpi-label">Avg Answer Time</div>
+      <div class="kpi-value">5.5<span class="unit">s</span></div>
+      <div class="kpi-sub">Seizure-to-answer</div>
+    </div>
+    <div class="kpi" style="--kpi-accent:var(--cyan)">
+      <div class="kpi-label">Internal Goal ≤10s</div>
+      <div class="kpi-value">94.8<span class="unit">%</span></div>
+      <div class="kpi-sub pass">Not a NENA metric · Target ≥90% — PASS</div>
+    </div>
+    <div class="kpi" style="--kpi-accent:var(--green)">
+      <div class="kpi-label">NENA ≤15s</div>
+      <div class="kpi-value">100<span class="unit">%</span></div>
+      <div class="kpi-sub pass">Target ≥90% — PASS</div>
+    </div>
+    <div class="kpi" style="--kpi-accent:var(--green)">
+      <div class="kpi-label">NENA ≤20s</div>
+      <div class="kpi-value">100<span class="unit">%</span></div>
+      <div class="kpi-sub pass">Target ≥95% — PASS</div>
+    </div>
+  </div>
+
+  <div class="section-title">NENA 56-005 Standard &amp; Internal Goal Compliance</div>
+
+  <div class="main-grid">
+
+    <div class="nena-card accent-cyan">
+      <div class="nena-head">
+        <div class="nena-title">Internal Goal — Answered ≤ 10s</div>
+        <div class="nena-target">Not NENA · Target ≥ 90%</div>
+      </div>
+      <div class="bar-track">
+        <div class="bar-fill fill-cyan" style="width:94.83%;"></div>
+        <div class="threshold-mark" data-label="90%" style="left:90%;"></div>
+      </div>
+      <div class="nena-readout"><span>Actual: <b>94.83%</b></span><span class="status-chip pass">Pass</span></div>
+    </div>
+
+    <div class="nena-card">
+      <div class="nena-head">
+        <div class="nena-title">NENA Standard — Answered ≤ 15s</div>
+        <div class="nena-target">Target ≥ 90%</div>
+      </div>
+      <div class="bar-track">
+        <div class="bar-fill fill-green" style="width:100%;"></div>
+        <div class="threshold-mark" data-label="90%" style="left:90%;"></div>
+      </div>
+      <div class="nena-readout"><span>Actual: <b>100.00%</b></span><span class="status-chip pass">Pass</span></div>
+    </div>
+
+    <div class="nena-card">
+      <div class="nena-head">
+        <div class="nena-title">NENA Standard — Answered ≤ 20s</div>
+        <div class="nena-target">Target ≥ 95%</div>
+      </div>
+      <div class="bar-track">
+        <div class="bar-fill fill-green" style="width:100%;"></div>
+        <div class="threshold-mark" data-label="95%" style="left:95%;"></div>
+      </div>
+      <div class="nena-readout"><span>Actual: <b>100.00%</b></span><span class="status-chip pass">Pass</span></div>
+    </div>
+
+    <div class="chart-card">
+      <h3>911 Outcome</h3>
+      <div class="chart-body">
+        <div class="chart-holder"><canvas id="outcomeChart"></canvas></div>
+        <ul class="legend-list">
+          <li><span><span class="sw sw-green"></span>Answered</span><b>58</b></li>
+          <li><span><span class="sw sw-red"></span>Abandoned</span><b>5</b></li>
+          <li><span><span class="sw sw-dim"></span>Unparsed</span><b>0</b></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="chart-card">
+      <h3>911 Class of Service</h3>
+      <div class="chart-body">
+        <div class="chart-holder"><canvas id="cosChart"></canvas></div>
+        <ul class="legend-list">
+          <li><span><span class="sw sw-cyan"></span>Wireless</span><b>49</b></li>
+          <li><span><span class="sw sw-amber"></span>VoIP</span><b>8</b></li>
+          <li><span><span class="sw sw-green"></span>Wireline</span><b>1</b></li>
+          <li><span><span class="sw sw-dim"></span>TLMA/Other</span><b>0</b></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="chart-card">
+      <h3>All Contact Types</h3>
+      <div class="chart-body">
+        <div class="chart-holder"><canvas id="contactChart"></canvas></div>
+        <ul class="legend-list">
+          <li><span><span class="sw sw-cyan"></span>911 Calls</span><b>63</b></li>
+          <li><span><span class="sw sw-amber"></span>Non-911 Admin</span><b>136</b></li>
+          <li><span><span class="sw sw-green"></span>Outbound</span><b>72</b></li>
+          <li><span><span class="sw sw-dim"></span>Text/TTY</span><b>0</b></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="volume-strip">
+      <div class="vol-seg"><span class="n" style="color:var(--cyan)">63</span><span class="lab">911 Calls</span></div>
+      <div class="vol-seg"><span class="n" style="color:var(--amber)">136</span><span class="lab">Non-911 Admin</span></div>
+      <div class="vol-seg"><span class="n" style="color:var(--green)">72</span><span class="lab">Outbound</span></div>
+      <div class="vol-seg"><span class="n dim">0</span><span class="lab">Text / TTY</span></div>
+      <div class="vol-seg total"><span class="n">271</span><span class="lab">Total Contacts</span></div>
+    </div>
+
+  </div>
+
+  <footer>SOURCE: Top PSAP Metrics – Answer Time.xlsx · Report Date 08/02/2026 · Generated 08/03/2026 07:59:18 · Anderson County Emergency Communications</footer>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
