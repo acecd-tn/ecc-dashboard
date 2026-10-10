@@ -214,29 +214,29 @@
       <div class="lbl">911 Calls Answered</div>
     </div>
     <div class="card c-red">
-      <div class="val">2</div>
+      <div class="val">0</div>
       <div class="lbl">911 Abandoned</div>
     </div>
     <div class="card">
-      <div class="val abandon-rate" id="abandonRate" data-pct="3.23">3.23%</div>
+      <div class="val abandon-rate" id="abandonRate" data-pct="0.00">0.00%</div>
       <div class="lbl">Abandon Rate</div>
     </div>
     <div class="card c-admin">
-      <div class="val">182</div>
+      <div class="val">200</div>
       <div class="lbl">Non-911 / Admin</div>
     </div>
     <div class="card c-admin">
-      <div class="val">93</div>
+      <div class="val">86</div>
       <div class="lbl">Outbound Calls</div>
     </div>
     <div class="card c-green">
-      <div class="val">337</div>
+      <div class="val">346</div>
       <div class="lbl">Total Call Volume</div>
     </div>
   </div>
 
   <div class="nena-wrap">
-    <div class="section-title">NENA 911 Answer Time Standard — Report Date 10/08/2026</div>
+    <div class="section-title">NENA 911 Answer Time Standard — Report Date 10/09/2026</div>
     <div class="nena-row">
       <div class="nena-card">
         <div class="labels-row">
@@ -271,7 +271,7 @@
   <div class="timeline-wrap">
     <div class="timeline-header">
       <div class="tl-left">
-        <div class="section-title">24-Hour Call Volume — 911 &amp; Admin — Report Date 10/08/2026</div>
+        <div class="section-title">24-Hour Call Volume — 911 &amp; Admin — Report Date 10/09/2026</div>
         <div class="tl-legend"><span class="dot dot-911"></span>911<span class="dot dot-admin"></span>Admin</div>
       </div>
       <div class="busiest" id="busiest">Busiest Hour: <b>—</b></div>
@@ -289,8 +289,8 @@
         <div class="shift-name">DAY SHIFT <span class="shift-star">★</span></div>
         <div class="shift-time">0700 – 1500</div>
         <div class="shift-stats">
-          <div class="shift-stat"><div class="n">22</div><div class="l">Calls Answered</div></div>
-          <div class="shift-stat"><div class="n dur" data-secs="124.0">124.0s</div><div class="l">Avg Call Duration</div></div>
+          <div class="shift-stat"><div class="n">25</div><div class="l">Calls Answered</div></div>
+          <div class="shift-stat"><div class="n dur" data-secs="140.7">140.7s</div><div class="l">Avg Call Duration</div></div>
         </div>
         <div class="shift-nena">
           <div><div class="v ten-sec" data-tenpct="100.00">100.00%</div><div class="k">≤10s</div></div>
@@ -303,8 +303,8 @@
         <div class="shift-name">EVENING SHIFT <span class="shift-star">★</span></div>
         <div class="shift-time">1500 – 2300</div>
         <div class="shift-stats">
-          <div class="shift-stat"><div class="n">26</div><div class="l">Calls Answered</div></div>
-          <div class="shift-stat"><div class="n dur" data-secs="137.4">137.4s</div><div class="l">Avg Call Duration</div></div>
+          <div class="shift-stat"><div class="n">29</div><div class="l">Calls Answered</div></div>
+          <div class="shift-stat"><div class="n dur" data-secs="116.7">116.7s</div><div class="l">Avg Call Duration</div></div>
         </div>
         <div class="shift-nena">
           <div><div class="v ten-sec" data-tenpct="100.00">100.00%</div><div class="k">≤10s</div></div>
@@ -317,8 +317,8 @@
         <div class="shift-name">OVERNIGHT SHIFT <span class="shift-star">★</span></div>
         <div class="shift-time">2300 – 0700</div>
         <div class="shift-stats">
-          <div class="shift-stat"><div class="n">12</div><div class="l">Calls Answered</div></div>
-          <div class="shift-stat"><div class="n dur" data-secs="131.9">131.9s</div><div class="l">Avg Call Duration</div></div>
+          <div class="shift-stat"><div class="n">6</div><div class="l">Calls Answered</div></div>
+          <div class="shift-stat"><div class="n dur" data-secs="233.8">233.8s</div><div class="l">Avg Call Duration</div></div>
         </div>
         <div class="shift-nena">
           <div><div class="v ten-sec" data-tenpct="100.00">100.00%</div><div class="k">≤10s</div></div>
@@ -333,9 +333,9 @@
 </div>
 
 <script>
-// 24-hour call volume, TWO series (from HourlySpeedOfAnswerRollup + CallsPerHourRollup/Administrative, 10/08/2026)
-const hourly911 = [2,1,0,1,1,1,3,3,4,0,1,5,1,3,5,1,4,3,1,6,6,3,2,3];
-const hourlyAdmin = [5,3,1,2,2,9,7,7,9,9,8,11,12,8,22,10,13,7,8,4,7,9,2,7];
+// 24-hour call volume, TWO series (from HourlySpeedOfAnswerRollup + CallsPerHourRollup/Administrative, 10/09/2026)
+const hourly911 = [0,1,1,1,0,0,2,0,3,1,3,6,3,3,6,7,4,2,2,4,4,2,4,1];
+const hourlyAdmin = [2,0,1,4,1,2,2,3,7,17,5,9,18,16,18,17,14,14,13,6,12,11,6,2];
 
 const max911 = Math.max(...hourly911);
 const maxAdmin = Math.max(...hourlyAdmin);
