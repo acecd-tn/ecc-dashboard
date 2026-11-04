@@ -210,7 +210,7 @@
 
   <div class="metrics-row">
     <div class="card c-cyan">
-      <div class="val">64</div>
+      <div class="val">51</div>
       <div class="lbl">911 Calls Answered</div>
     </div>
     <div class="card c-red">
@@ -218,32 +218,32 @@
       <div class="lbl">911 Abandoned</div>
     </div>
     <div class="card">
-      <div class="val abandon-rate" id="abandonRate" data-pct="3.03">3.03%</div>
+      <div class="val abandon-rate" id="abandonRate" data-pct="3.77">3.77%</div>
       <div class="lbl">Abandon Rate</div>
     </div>
     <div class="card c-admin">
-      <div class="val">179</div>
+      <div class="val">177</div>
       <div class="lbl">Non-911 / Admin</div>
     </div>
     <div class="card c-admin">
-      <div class="val">62</div>
+      <div class="val">64</div>
       <div class="lbl">Outbound Calls</div>
     </div>
     <div class="card c-green">
-      <div class="val">307</div>
+      <div class="val">294</div>
       <div class="lbl">Total Call Volume</div>
     </div>
   </div>
 
   <div class="nena-wrap">
-    <div class="section-title">NENA 911 Answer Time Standard — Report Date 11/02/2026</div>
+    <div class="section-title">NENA 911 Answer Time Standard — Report Date 11/03/2026</div>
     <div class="nena-row">
       <div class="nena-card">
         <div class="labels-row">
           <div class="badge">Internal Goal</div>
           <div class="goal">Target: 90% ≤ 10s</div>
         </div>
-        <div class="pct status-pass">95.45%</div>
+        <div class="pct status-pass">96.23%</div>
         <div class="desc">Answered ≤ 10 Seconds</div>
         <div class="pill pill-pass">MEETS GOAL</div>
       </div>
@@ -252,7 +252,7 @@
           <div class="badge">NENA Standard</div>
           <div class="goal">Target: 90% ≤ 15s</div>
         </div>
-        <div class="pct status-pass">100.00%</div>
+        <div class="pct status-pass">98.11%</div>
         <div class="desc">Answered ≤ 15 Seconds</div>
         <div class="pill pill-pass">MEETS STANDARD</div>
       </div>
@@ -271,7 +271,7 @@
   <div class="timeline-wrap">
     <div class="timeline-header">
       <div class="tl-left">
-        <div class="section-title">24-Hour Call Volume — 911 &amp; Admin — Report Date 11/02/2026</div>
+        <div class="section-title">24-Hour Call Volume — 911 &amp; Admin — Report Date 11/03/2026</div>
         <div class="tl-legend"><span class="dot dot-911"></span>911<span class="dot dot-admin"></span>Admin</div>
       </div>
       <div class="busiest" id="busiest">Busiest Hour: <b>—</b></div>
@@ -289,12 +289,12 @@
         <div class="shift-name">DAY SHIFT <span class="shift-star">★</span></div>
         <div class="shift-time">0700 – 1900</div>
         <div class="shift-stats">
-          <div class="shift-stat"><div class="n">42</div><div class="l">Calls Answered</div></div>
-          <div class="shift-stat"><div class="n dur" data-secs="134.5">134.5s</div><div class="l">Avg Call Duration</div></div>
+          <div class="shift-stat"><div class="n">31</div><div class="l">Calls Answered</div></div>
+          <div class="shift-stat"><div class="n dur" data-secs="125.6">125.6s</div><div class="l">Avg Call Duration</div></div>
         </div>
         <div class="shift-nena">
-          <div><div class="v ten-sec" data-tenpct="95.24">95.24%</div><div class="k">≤10s</div></div>
-          <div><div class="v status-pass" data-pct15="100.00">100.00%</div><div class="k">≤15s</div></div>
+          <div><div class="v ten-sec" data-tenpct="93.55">93.55%</div><div class="k">≤10s</div></div>
+          <div><div class="v status-pass" data-pct15="96.77">96.77%</div><div class="k">≤15s</div></div>
           <div><div class="v status-pass" data-pct20="100.00">100.00%</div><div class="k">≤20s</div></div>
         </div>
       </div>
@@ -303,11 +303,11 @@
         <div class="shift-name">NIGHT SHIFT <span class="shift-star">★</span></div>
         <div class="shift-time">1900 – 0700</div>
         <div class="shift-stats">
-          <div class="shift-stat"><div class="n">22</div><div class="l">Calls Answered</div></div>
-          <div class="shift-stat"><div class="n dur" data-secs="115.8">115.8s</div><div class="l">Avg Call Duration</div></div>
+          <div class="shift-stat"><div class="n">20</div><div class="l">Calls Answered</div></div>
+          <div class="shift-stat"><div class="n dur" data-secs="203.3">203.3s</div><div class="l">Avg Call Duration</div></div>
         </div>
         <div class="shift-nena">
-          <div><div class="v ten-sec" data-tenpct="95.45">95.45%</div><div class="k">≤10s</div></div>
+          <div><div class="v ten-sec" data-tenpct="100.00">100.00%</div><div class="k">≤10s</div></div>
           <div><div class="v status-pass" data-pct15="100.00">100.00%</div><div class="k">≤15s</div></div>
           <div><div class="v status-pass" data-pct20="100.00">100.00%</div><div class="k">≤20s</div></div>
         </div>
@@ -319,9 +319,9 @@
 </div>
 
 <script>
-// 24-hour call volume, TWO series (from HourlySpeedOfAnswerRollup + CallsPerHourRollup/Administrative, 11/02/2026)
-const hourly911 = [1,1,1,0,2,0,2,2,2,0,8,5,5,1,2,2,4,7,4,8,1,5,0,1];
-const hourlyAdmin = [1,1,2,0,2,0,1,4,21,8,8,12,19,16,17,6,12,6,9,11,7,12,4,0];
+// 24-hour call volume, TWO series (from HourlySpeedOfAnswerRollup + CallsPerHourRollup/Administrative, 11/03/2026)
+const hourly911 = [1,0,2,0,1,1,1,1,5,3,2,2,0,7,2,3,3,2,1,5,1,1,5,2];
+const hourlyAdmin = [1,2,1,3,2,1,1,10,14,13,19,12,17,5,14,14,20,7,1,6,7,0,2,5];
 
 const max911 = Math.max(...hourly911);
 const maxAdmin = Math.max(...hourlyAdmin);
